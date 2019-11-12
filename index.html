@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="./assets/font-awesome.min.css">
   <link rel="stylesheet" href="./assets/statexpflat.css">
   <link rel="stylesheet" href="./assets/statexpflat-grid.css">
-  <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script> -->
-
+  
   <style>
     a:lang(ar),
     a:lang(ckb),
@@ -88,8 +86,8 @@
 </head>
 
 <body class="mediawiki ltr sitedir-ltr ns-110 ns-subject page-Archive_Crime_statistics_fr skin-statexpflat action-view" cz-shortcut-listen="true">
-
-
+  
+  
   <div class="container">
 
     <div class="header" id="se-header">
@@ -100,31 +98,31 @@
         <li>
           <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Help:Contents">Aide</a>
         </li>
-
+        
         <li>
           <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:UserLogin&amp;returnto=Archive%3ACrime+statistics%2Ffr"
             title="Il est nécessaire de se connecter avant toute modification (réservé à Eurostat et aux contributeurs accrédités)"
             accesskey="o">identification</a>
-        </li>
-        <li class="login-icon"></li>
-      </ul>
-
-      <div class="heading">
-        <!--<div class="statexp-small hidden-lg hidden-md">Statistics Explained</div>-->
-        <div class="lighthouse articles visible-lg-block"></div>
-
-        <div class="links hidden-xs hidden-sm">
-          <ul class="list-inline">
-
-
-            <li class="lang-selector hidden-xs hidden-sm">
-              <div class="dropdown">
-                <button id="lang-selector" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <strong class="selflink">français</strong>
-                  <span class="caret"></span>
+          </li>
+          <li class="login-icon"></li>
+        </ul>
+        
+        <div class="heading">
+          <!--<div class="statexp-small hidden-lg hidden-md">Statistics Explained</div>-->
+          <div class="lighthouse articles visible-lg-block"></div>
+          
+          <div class="links hidden-xs hidden-sm">
+            <ul class="list-inline">
+              
+              
+              <li class="lang-selector hidden-xs hidden-sm">
+                <div class="dropdown">
+                  <button id="lang-selector" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <strong class="selflink">français</strong>
+                    <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-
+                  
                   <li>
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Archive:Crime_statistics" title="Archive:Crime statistics">English</a>
                   </li>
@@ -189,22 +187,22 @@
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Archive:Crime_statistics/sv" title="Archive:Crime statistics/sv">svenska</a>
                   </li>
                 </ul>
-
+                
               </div>
-
+              
             </li>
-
+            
           </ul>
-
+          
         </div>
         <!----
-		<div class="eurostat">eurostat</div>
-		<div class="statexp">Statistics Explained</div>
-		<!---->
-        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">
-          <div class="statexptitle"></div>
-        </a>
-        <div class="mobile-header-buttons hidden-md hidden-lg">
+          <div class="eurostat">eurostat</div>
+          <div class="statexp">Statistics Explained</div>
+          <!---->
+          <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">
+            <div class="statexptitle"></div>
+          </a>
+          <div class="mobile-header-buttons hidden-md hidden-lg">
           <button id="mobile-menu-button" class="bt-open">
             <span class="glyphicon glyphicon-align-justify icon-show"></span>
             <span class="glyphicon glyphicon-remove icon-hide"></span>
@@ -221,7 +219,7 @@
             <div class="form-group">
               <div class="input-group">
                 <input type="search" name="search" placeholder="Rechercher" title="Rechercher dans Statistics Explained [ctrl-option-f]"
-                  accesskey="f" id="searchInput" class="form-control search-field" autocomplete="off">
+                accesskey="f" id="searchInput" class="form-control search-field" autocomplete="off">
                 <span class="input-group-btn">
                   <button type="submit" id="mw-searchButton" class="btn search-btn search-general">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -231,9 +229,9 @@
             </div>
           </form>
         </div>
-
-
-
+        
+        
+        
       </div>
       <div class="row hidden-xs hidden-sm">
         <div class="col-lg-12  " id="menu-bar-container">
@@ -241,98 +239,98 @@
             <div class="col-lg-4 col-md-4 head-menu-bar">
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="p-navigation" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                  Navigation
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="Navigation">
-
-                  <li id="n-Home">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
+                aria-expanded="false">
+                Navigation
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="Navigation">
+                
+                <li id="n-Home">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
+                </li>
+                
+                <li id="n-Statistical-themes">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
+                </li>
+                
+                <li id="n-Glossary">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
+                </li>
+                
+                <li id="n-Categories">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Special:Categories">Catégories</a>
+                </li>
+                
+                <li id="n-Tutorials">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Tutorial:Help_for_readers">Tutoriels</a>
                   </li>
-
-                  <li id="n-Statistical-themes">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
-                  </li>
-
-                  <li id="n-Glossary">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
-                  </li>
-
-                  <li id="n-Categories">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Special:Categories">Catégories</a>
-                  </li>
-
-                  <li id="n-Tutorials">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Tutorial:Help_for_readers">Tutoriels</a>
-                  </li>
-
+                  
                   <li id="n-help">
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Help:Contents" rel="nofollow" title="Aide">Aide</a>
                   </li>
-
+                  
                   <li id="n-Eurostat-home">
                     <a href="http://ec.europa.eu/eurostat/" rel="nofollow">Page d'accueil d'Eurostat</a>
                   </li>
-
+                  
                   <li id="n-Contact-Eurostat">
                     <a href="http://ec.europa.eu/eurostat/help/support" rel="nofollow">Contacter Eurostat</a>
                   </li>
                 </ul>
-
+                
               </div>
             </div>
-
+            
             <div class="col-lg-4 col-md-4 head-menu-bar">
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="p-m-onlinepub" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                  Publications en ligne
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
+                aria-expanded="false">
+                Publications en ligne
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
+                
+                <li id="n-Regional-yearbook">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
+                </li>
+                
+                <li id="n-The-EU-in-the-world">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
+                </li>
+                
+                <li id="n-Multilingual-articles">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
+                </li>
 
-                  <li id="n-Regional-yearbook">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
-                  </li>
-
-                  <li id="n-The-EU-in-the-world">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
-                  </li>
-
-                  <li id="n-Multilingual-articles">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
-                  </li>
-
-                  <li id="n-Other-publications">
-                    <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
-                  </li>
-                </ul>
-
-              </div>
+                <li id="n-Other-publications">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
+                </li>
+              </ul>
+              
             </div>
+          </div>
 
-            <div class="col-lg-4 col-md-4 head-menu-bar">
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="p-TOOLBOX" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                  Outils
-                  <span class="caret"></span>
-                </button>
+          <div class="col-lg-4 col-md-4 head-menu-bar">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="p-TOOLBOX" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              Outils
+              <span class="caret"></span>
+            </button>
                 <ul class="dropdown-menu" aria-labelledby="">
                   <li id="t-whatlinkshere">
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:WhatLinksHere/Archive:Crime_statistics/fr"
-                      title="Liste des pages liées à celle-ci [j]" accesskey="j">Pages liées</a>
+                    title="Liste des pages liées à celle-ci [j]" accesskey="j">Pages liées</a>
                   </li>
                   <li id="t-specialpages">
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:SpecialPages" title="Liste de toutes les pages spéciales [q]"
-                      accesskey="q">Pages spéciales</a>
+                    accesskey="q">Pages spéciales</a>
                   </li>
                 </ul>
-
+                
               </div>
             </div>
-
+            
           </div>
         </div>
       </div>
@@ -345,7 +343,7 @@
             <div class="form-group">
               <div class="input-group">
                 <input type="search" name="search" placeholder="Rechercher" title="Rechercher dans Statistics Explained [ctrl-option-f]"
-                  accesskey="f" id="searchInput" class="form-control search-field" autocomplete="off">
+                accesskey="f" id="searchInput" class="form-control search-field" autocomplete="off">
                 <span class="input-group-btn">
                   <button type="submit" id="mw-searchButton" class="btn search-btn search-general">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -355,38 +353,38 @@
             </div>
           </form>
         </div>
-
+        
       </div>
       <div class="col-sm-12 col-xs-12 mobile-menu">
         <div class="col-lg-4 col-md-4 head-menu-bar">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="p-navigation" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Navigation
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="Navigation">
-
-              <li id="n-Home">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
-              </li>
-
-              <li id="n-Statistical-themes">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
-              </li>
-
-              <li id="n-Glossary">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
-              </li>
-
+            aria-expanded="false">
+            Navigation
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="Navigation">
+            
+            <li id="n-Home">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
+            </li>
+            
+            <li id="n-Statistical-themes">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
+            </li>
+            
+            <li id="n-Glossary">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
+            </li>
+            
               <li id="n-Categories">
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Special:Categories">Catégories</a>
               </li>
-
+              
               <li id="n-Tutorials">
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Tutorial:Help_for_readers">Tutoriels</a>
               </li>
-
+              
               <li id="n-help">
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Help:Contents" rel="nofollow" title="Aide">Aide</a>
               </li>
@@ -394,225 +392,225 @@
               <li id="n-Eurostat-home">
                 <a href="http://ec.europa.eu/eurostat/" rel="nofollow">Page d'accueil d'Eurostat</a>
               </li>
-
+              
               <li id="n-Contact-Eurostat">
                 <a href="http://ec.europa.eu/eurostat/help/support" rel="nofollow">Contacter Eurostat</a>
               </li>
             </ul>
-
+            
           </div>
         </div>
-
+        
         <div class="col-lg-4 col-md-4 head-menu-bar">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="p-m-onlinepub" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Publications en ligne
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
-
-              <li id="n-Regional-yearbook">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
-              </li>
-
-              <li id="n-The-EU-in-the-world">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
-              </li>
-
-              <li id="n-Multilingual-articles">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
-              </li>
-
-              <li id="n-Other-publications">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
-              </li>
-            </ul>
-
-          </div>
+            aria-expanded="false">
+            Publications en ligne
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
+            
+            <li id="n-Regional-yearbook">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
+            </li>
+            
+            <li id="n-The-EU-in-the-world">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
+            </li>
+            
+            <li id="n-Multilingual-articles">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
+            </li>
+            
+            <li id="n-Other-publications">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
+            </li>
+          </ul>
+          
         </div>
-
+      </div>
+      
         <div class="col-lg-4 col-md-4 head-menu-bar">
           <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="p-TOOLBOX" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Outils
+            aria-expanded="false">
+            Outils
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="">
               <li id="t-whatlinkshere">
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:WhatLinksHere/Archive:Crime_statistics/fr"
                   title="Liste des pages liées à celle-ci [j]" accesskey="j">Pages liées</a>
-              </li>
-              <li id="t-specialpages">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:SpecialPages" title="Liste de toutes les pages spéciales [q]"
+                </li>
+                <li id="t-specialpages">
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:SpecialPages" title="Liste de toutes les pages spéciales [q]"
                   accesskey="q">Pages spéciales</a>
+                </li>
+              </ul>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!--END HEADER BEGIN PAGE-->
+      <!----
+        <div class="onerow">
+          <!---->
+          <div class="row content-row">
+            <!-- BEGIN LSF -->
+            <!---->
+            <div class="hidden-md hidden-lg hidden-xs hidden-sm sidebar content-col">
+              <!----
+                <div class="col2 sidebar">
+                  <!---->
+                  <div class="col-lg-4 col-md-4 head-menu-bar">
+                    <div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="p-navigation" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">
+                      Navigation
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="Navigation">
+                      
+                      <li id="n-Home">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
+                      </li>
+                      
+                      <li id="n-Statistical-themes">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
+                      </li>
+                      
+                      <li id="n-Glossary">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
+                      </li>
+                      
+                      <li id="n-Categories">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Special:Categories">Catégories</a>
+                      </li>
+                      
+                      <li id="n-Tutorials">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Tutorial:Help_for_readers">Tutoriels</a>
+                      </li>
+                      
+                      <li id="n-help">
+                        <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Help:Contents" rel="nofollow" title="Aide">Aide</a>
+                      </li>
+                      
+                      <li id="n-Eurostat-home">
+                        <a href="http://ec.europa.eu/eurostat/" rel="nofollow">Page d'accueil d'Eurostat</a>
+                      </li>
+                      
+                      <li id="n-Contact-Eurostat">
+                        <a href="http://ec.europa.eu/eurostat/help/support" rel="nofollow">Contacter Eurostat</a>
+                      </li>
+                    </ul>
+                    
+                  </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 head-menu-bar">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="p-m-onlinepub" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Publications en ligne
+                    <span class="caret"></span>
+                  </button>
+            <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
+              
+              <li id="n-Regional-yearbook">
+                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
+              </li>
+              
+              <li id="n-The-EU-in-the-world">
+                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
+              </li>
+              
+              <li id="n-Multilingual-articles">
+                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
+              </li>
+              
+              <li id="n-Other-publications">
+                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
               </li>
             </ul>
-
+            
           </div>
         </div>
-
+        
+        <div class="col-lg-4 col-md-4 head-menu-bar">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="p-TOOLBOX" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Outils
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="">
+            <li id="t-whatlinkshere">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:WhatLinksHere/Archive:Crime_statistics/fr"
+              title="Liste des pages liées à celle-ci [j]" accesskey="j">Pages liées</a>
+            </li>
+            <li id="t-specialpages">
+              <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:SpecialPages" title="Liste de toutes les pages spéciales [q]"
+              accesskey="q">Pages spéciales</a>
+            </li>
+          </ul>
+          
+        </div>
       </div>
+      
     </div>
-
-    <!--END HEADER BEGIN PAGE-->
-    <!----
-<div class="onerow">
-<!---->
-    <div class="row content-row">
-      <!-- BEGIN LSF -->
-      <!---->
-      <div class="hidden-md hidden-lg hidden-xs hidden-sm sidebar content-col">
-        <!----
-		<div class="col2 sidebar">
-		<!---->
-        <div class="col-lg-4 col-md-4 head-menu-bar">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="p-navigation" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Navigation
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="Navigation">
-
-              <li id="n-Home">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Main_Page/fr">Page d'accueil</a>
-              </li>
-
-              <li id="n-Statistical-themes">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Statistical_themes/fr">Thèmes statistiques</a>
-              </li>
-
-              <li id="n-Glossary">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Thematic_glossaries/fr">Glossaire</a>
-              </li>
-
-              <li id="n-Categories">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Special:Categories">Catégories</a>
-              </li>
-
-              <li id="n-Tutorials">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Tutorial:Help_for_readers">Tutoriels</a>
-              </li>
-
-              <li id="n-help">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Help:Contents" rel="nofollow" title="Aide">Aide</a>
-              </li>
-
-              <li id="n-Eurostat-home">
-                <a href="http://ec.europa.eu/eurostat/" rel="nofollow">Page d'accueil d'Eurostat</a>
-              </li>
-
-              <li id="n-Contact-Eurostat">
-                <a href="http://ec.europa.eu/eurostat/help/support" rel="nofollow">Contacter Eurostat</a>
-              </li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 head-menu-bar">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="p-m-onlinepub" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Publications en ligne
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="Publications en ligne">
-
-              <li id="n-Regional-yearbook">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Eurostat_regional_yearbook/fr">Annuaire régional</a>
-              </li>
-
-              <li id="n-The-EU-in-the-world">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/The_EU_in_the_world">The EU in the world</a>
-              </li>
-
-              <li id="n-Multilingual-articles">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Multilingual_articles">Multilingual articles</a>
-              </li>
-
-              <li id="n-Other-publications">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php/Online%20publications">Liste complète</a>
-              </li>
-            </ul>
-
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 head-menu-bar">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="p-TOOLBOX" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Outils
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="">
-              <li id="t-whatlinkshere">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:WhatLinksHere/Archive:Crime_statistics/fr"
-                  title="Liste des pages liées à celle-ci [j]" accesskey="j">Pages liées</a>
-              </li>
-              <li id="t-specialpages">
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Special:SpecialPages" title="Liste de toutes les pages spéciales [q]"
-                  accesskey="q">Pages spéciales</a>
-              </li>
-            </ul>
-
-          </div>
-        </div>
-
-      </div>
-      <!-- END LSF -->
-
-      <!-- BEGIN CONTENT-->
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 content-col content article-content ">
-
-
-        <div id="content" class="content">
+    <!-- END LSF -->
+    
+    <!-- BEGIN CONTENT-->
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 content-col content article-content ">
+      
+      
+      <div id="content" class="content">
 
           <a name="top" id="top"></a>
-
+          
           <div class="article-action-bar">
-
+            
             <div style="height: 17px;">
-              <div style="float: right;">
-                <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fec.europa.eu%2Feurostat%2Fstatistics-explained%2Findex.php%3Ftitle%3DArchive%3ACrime_statistics%2Ffr&amp;hashtags=Eurostat">
-                  <i class="fa fa-twitter fa-2x" aria-hidden="true" style="color: #00aced;"></i>
-                </a>
-
-                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fec.europa.eu%2Feurostat%2Fstatistics-explained%2Findex.php%3Ftitle%3DArchive%3ACrime_statistics%2Ffr"
-                  target="_blank" onclick="window.open(this.href,&#39;&#39;,&#39;scrollbars=1,resizable=1,width=400,height=620&#39;);return false;">
+                <div style="float: right;">
+                    <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fec.europa.eu%2Feurostat%2Fstatistics-explained%2Findex.php%3Ftitle%3DArchive%3ACrime_statistics%2Ffr&amp;hashtags=Eurostat">
+                      <i class="fa fa-twitter fa-2x" aria-hidden="true" style="color: #00aced;"></i>
+                    </a>
+                    
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fec.europa.eu%2Feurostat%2Fstatistics-explained%2Findex.php%3Ftitle%3DArchive%3ACrime_statistics%2Ffr"
+                    target="_blank" onclick="window.open(this.href,&#39;&#39;,&#39;scrollbars=1,resizable=1,width=400,height=620&#39;);return false;">
                   <i class="fa fa-facebook-official fa-2x" aria-hidden="true" style="color: #3b5998;"></i>
                 </a>
                 <a href="http://plus.google.com/share?app=110&amp;url=http%3A%2F%2Fec.europa.eu%2Feurostat%2Fstatistics-explained%2Findex.php%3Ftitle%3DArchive%3ACrime_statistics%2Ffr"
-                  target="_blank" onclick="window.open(this.href,&#39;&#39;,&#39;scrollbars=1,resizable=1,width=400,height=620&#39;);return false;">
-                  <i class="fa fa-google-plus fa-2x" aria-hidden="true" style="color: #d34836;"></i>
-                </a>
-                <span></span>
-
-                <span id="userbar-print">
-                  <span class=" pdfnospin" data-pageid="19239">
-                    <i class="fa fa-print fa-2x"></i>
-                  </span>
-                  <span class="fa-stack pdfspin" style="display: none;">
+                target="_blank" onclick="window.open(this.href,&#39;&#39;,&#39;scrollbars=1,resizable=1,width=400,height=620&#39;);return false;">
+                <i class="fa fa-google-plus fa-2x" aria-hidden="true" style="color: #d34836;"></i>
+              </a>
+              <span></span>
+              
+              <span id="userbar-print">
+                <span class=" pdfnospin" data-pageid="19239">
+                  <i class="fa fa-print fa-2x"></i>
+                </span>
+                <span class="fa-stack pdfspin" style="display: none;">
                     <i class="fa fa-print fa-stack-2x"></i>
                     <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw " style="margin-left: -4px;"></i>
                   </span>
                   <span>
-
+                    
 
                   </span>
                 </span>
               </div>
             </div>
-
+            
           </div>
-
+          
           <h1 id="firstHeading" class="firstHeading">Statistiques sur la criminalité </h1>
-
+          
           <div id="bodyContent" class="bodyContent">
-
+            
             <!-- start content -->
             <div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr">
               <dl>
@@ -621,11 +619,11 @@
                     <a href="#Informations_suppl.C3.A9mentaires_Eurostat">Informations supplémentaires Eurostat, Principaux tableaux et Base de données</a>. Mise à jour prévue
                     de l’article: septembre2016. La
                     <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Crime_and_criminal_justice_statistics" title="Crime and criminal justice statistics">version anglaise</a> est plus récente.</i>
-                </dd>
-              </dl>
-
-              <p>Le présent article présente les statistiques récentes de la criminalité et de la justice pénale dans l’
-                <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:European_Union_(EU)/fr" gloss-content="L’&lt;b&gt;Union européenne&lt;/b&gt;, ou &lt;b&gt;UE&lt;/b&gt;, est une union économique et politique de 28 pays européens, instituée le 1&lt;sup&gt;er&lt;/sup&gt; novembre 1993 ..."
+                  </dd>
+                </dl>
+                
+                <p>Le présent article présente les statistiques récentes de la criminalité et de la justice pénale dans l’
+                  <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:European_Union_(EU)/fr" gloss-content="L’&lt;b&gt;Union européenne&lt;/b&gt;, ou &lt;b&gt;UE&lt;/b&gt;, est une union économique et politique de 28 pays européens, instituée le 1&lt;sup&gt;er&lt;/sup&gt; novembre 1993 ..."
                   gloss-idx="0" original-title="Glossary:European Union (EU)/fr">Union européenne (UE)</a>. Les statistiques actuellement disponibles témoignent de la diversité des systèmes
                 judiciaires et policiers au sein de l’Union européenne. Lorsque l’on compare les statistiques sur la criminalité
                 entre les États membres de l’Union, il faudrait se concentrer sur les évolutions dans le temps plutôt que
@@ -789,15 +787,15 @@
                   </li>
                 </ul>
               </div>
-
+              
               <h2>
                 <span class="mw-headline" id="Principaux_r.C3.A9sultats_statistiques">Principaux résultats statistiques</span>
               </h2>
               <h3>
                 <span class="mw-headline" id="Crimes_et_d.C3.A9lits_enregistr.C3.A9s_par_les_services_de_police">Crimes et délits enregistrés par les services de police</span>
               </h3>
-
-
+              
+              
               <table cellspacing="0" cellpadding="0" id="table1">
                 <caption> Tableau 1: Infractions enregistrées par la police, 2002–12</caption>
                 <thead>
@@ -808,11 +806,11 @@
                   </tr>
                 </thead>
                 <tbody>
-
+                  
                   <tr>
-
+                    
                     <th>
-
+                      
                     </th>
                     <th dir="ltr"></th>
                     <th>2002</th>
@@ -1424,7 +1422,7 @@
                   </tr>
                 </tbody>
               </table>
-
+              
               <p>Les statistiques sur les crimes et délits mis en évidence dans le présent article concernent les infractions
                 enregistrées par la police dans les États membres de l’Union et dans certains autres pays européens. Ces
                 données ne prétendent pas décrire l’ensemble des crimes et délits commis en Europe: certains crimes et délits
@@ -1506,19 +1504,19 @@
               <table cellspacing="0" cellpadding="0" id="table2">
                 <caption>Population carcérale, moyenne par an, 2007–09 et 2010–12
                   <br> (pour 100 000 habitants)</caption>
-                <thead>
-                  <tr>
-                    <th>N°</th>
-                    <th>Pays</th>
-                    <th>2007&ndash;09</th>
-                    <th>2010&ndash;12</th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr>
-                    <th>
-                      <div>4</div>
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>Pays</th>
+                      <th>2007&ndash;09</th>
+                      <th>2010&ndash;12</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr>
+                      <th>
+                        <div>4</div>
                     </th>
                     <td>Lettonie</td>
                     <td>312</td>
@@ -1578,9 +1576,9 @@
                     </th>
                     <td>Angleterreet
                       <br />paysdeGalles(UK)</td>
-                    <td>151</td>
-                    <td>154</td>
-                  </tr>
+                      <td>151</td>
+                      <td>154</td>
+                    </tr>
                   <tr>
                     <th>
                       <div>12</div>
@@ -1772,9 +1770,9 @@
                 les pays à l’exception de la Grèce, de Malte et de l’Autriche. Malgré des diminutions des pourcentages d’homicide
                 dans les trois
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Baltic_Member_States/fr" gloss-content="L’Union européenne compte parmi ses membres trois &lt;b&gt;États baltes&lt;/b&gt;: Estonie (EE), Lettonie (LV) et Lituanie (LT).
-&lt;br /&gt;
-
-&lt;h2&gt;&lt;span ..." gloss-idx="1" original-title="Glossary:Baltic Member States/fr"> États membres baltes</a>, le nombre d’homicides pour 100000habitants s’est maintenu à un niveau plus élevé
+                &lt;br /&gt;
+                
+                &lt;h2&gt;&lt;span ..." gloss-idx="1" original-title="Glossary:Baltic Member States/fr"> États membres baltes</a>, le nombre d’homicides pour 100000habitants s’est maintenu à un niveau plus élevé
                 dans ces pays que dans l’ensemble des autres États membres.
               </p>
               <h4>
@@ -1891,14 +1889,14 @@
                 125 au cours de la période 2007–2009. Les pourcentages les plus bas au cours de la période 2010–2012 ont
                 été enregistrés dans les
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Nordic_Member_States/fr" gloss-content="L’Union européenne compte trois &lt;b&gt;États membres nordiques&lt;/b&gt;: le Danemark (DK), la Suède (SE) et la Finlande ..."
-                  gloss-idx="2" original-title="Glossary:Nordic Member States/fr">États membres nordiques</a> et en Slovénie (entre 60 et 72détenus pour 100000habitants).
+                gloss-idx="2" original-title="Glossary:Nordic Member States/fr">États membres nordiques</a> et en Slovénie (entre 60 et 72détenus pour 100000habitants).
               </p>
               <h2>
                 <span class="mw-headline" id="Sources_et_disponibilit.C3.A9_des_donn.C3.A9es">Sources et disponibilité des données</span>
               </h2>
               <p>
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Eurostat/fr" gloss-content="&lt;b&gt;Eurostat&lt;/b&gt;, l’office statistique de l’Union européenne (EU), est basé à Luxembourg (LU). Il publie des statistiques officielles ..."
-                  gloss-idx="3" original-title="Glossary:Eurostat/fr">Eurostat</a> publie des statistiques sur la criminalité et les systèmes de justice pénale depuis 1950 en
+                gloss-idx="3" original-title="Glossary:Eurostat/fr">Eurostat</a> publie des statistiques sur la criminalité et les systèmes de justice pénale depuis 1950 en
                 ce qui concerne le nombre total de crimes et délits enregistrés et depuis 1993 pour un ensemble d’infractions
                 spécifiques. La base de données inclut également les statistiques relatives à la population carcérale depuis
                 1987 et au nombre d’officiers de police depuis 1993.
@@ -1911,7 +1909,7 @@
                 d’enregistrement d’un pays restent relativement constantes dans le temps. On constate cependant de nombreuses
                 ruptures dans les
                 <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Glossary:Time_series/fr" gloss-content="Une &lt;b&gt;série chronologique&lt;/b&gt; (ou &lt;b&gt;temporelle&lt;/b&gt;) est une suite de données montrant l’évolution de la valeur d’une variable sur une ..."
-                  gloss-idx="4" original-title="Glossary:Time series/fr">séries chronologiques</a> et d’autres changements dans les méthodologies/définitions.
+                gloss-idx="4" original-title="Glossary:Time series/fr">séries chronologiques</a> et d’autres changements dans les méthodologies/définitions.
               </p>
               <p>La comparaison des statistiques sur la criminalité entre les pays peut être influencée par divers facteurs,
                 notamment:
@@ -1989,11 +1987,11 @@
               <ul>
                 <li>
                   <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Crime_trends_in_detail&amp;action=edit&amp;redlink=1"
-                    class="new" title="Crime trends in detail (page inexistante)">Crime trends in detail</a> (en anglais)
+                  class="new" title="Crime trends in detail (page inexistante)">Crime trends in detail</a> (en anglais)
                 </li>
                 <li>
                   <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Government_expenditure_on_public_order_and_safety"
-                    title="Government expenditure on public order and safety">Government expenditure on public order and safety</a> (en anglais)
+                  title="Government expenditure on public order and safety">Government expenditure on public order and safety</a> (en anglais)
                 </li>
                 <li>
                   <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=Social_protection_statistics/fr" title="Social protection statistics/fr">Statistiques sur la protection sociale</a>
@@ -2016,8 +2014,8 @@
                   <a rel="nofollow" class="external text" href="http://ec.europa.eu/eurostat/product?code=KS-TC-13-007&amp;language=en">Money Laundering in Europe — 2013 edition</a> — document de travail (en anglais)
                 </li>
               </ul>
-
-
+              
+              
               <h3>
                 <span class="mw-headline" id="Section_d.C3.A9di.C3.A9e">Section dédiée</span>
               </h3>
@@ -2034,7 +2032,7 @@
                   <a rel="nofollow" class="external text" href="http://ec.europa.eu/eurostat/cache/metadata/en/crim_esms.htm">Criminalité et justice pénale</a> (ESMS metadata file — crim_esms)
                 </li>
               </ul>
-
+              
               <h3>
                 <span class="mw-headline" id="Autres_informations">Autres informations</span>
               </h3>
@@ -2087,49 +2085,49 @@
                   <span class="mw-cite-backlink">
                     <a href="#cite_ref-1">
                       <span class="cite-accessibility-label">Aller </span>↑</a>
-                  </span>
-                  <span class="reference-text">Par exemple, la Grèce, Chypre, le Luxembourg, l’Islande et le Liechtenstein ne font pas de distinction
-                    entre les «cambriolages dans un lieu d’habitation» et ceux qui sont effectués dans les magasins, dans
-                    les garages, etc. Leurs données ne peuvent donc pas être comparées directement à celles des autres pays
-                    qui ne portent que sur les cambriolages dans un lieu d’habitation.</span>
-                </li>
-              </ol>
-
-            </div>
-
-            <div class="clearfix"></div>
-
-            <!-- end content -->
-            <div class="visualClear"></div>
-          </div>
-
-
-          <!--</div>-->
-          <ul class="list-inline footer-nav">
-
-            <li id="ca-nstab-archive" class="selected">
-              <a href="">Archive</a>
+                    </span>
+                    <span class="reference-text">Par exemple, la Grèce, Chypre, le Luxembourg, l’Islande et le Liechtenstein ne font pas de distinction
+                      entre les «cambriolages dans un lieu d’habitation» et ceux qui sont effectués dans les magasins, dans
+                      les garages, etc. Leurs données ne peuvent donc pas être comparées directement à celles des autres pays
+                      qui ne portent que sur les cambriolages dans un lieu d’habitation.</span>
+                    </li>
+                  </ol>
+                  
+                </div>
+                
+                <div class="clearfix"></div>
+                
+                <!-- end content -->
+                <div class="visualClear"></div>
+              </div>
+              
+              
+              <!--</div>-->
+              <ul class="list-inline footer-nav">
+                
+                <li id="ca-nstab-archive" class="selected">
+                  <a href="">Archive</a>
             </li>
             <li id="ca-talk" class="new">
               <a href="http://ec.europa.eu/eurostat/statistics-explained/index.php?title=StatExp:Crime_statistics/fr&amp;action=edit&amp;redlink=1"
-                title="Discussion au sujet de cette page de contenu [t]" accesskey="t">Discussion</a>
+              title="Discussion au sujet de cette page de contenu [t]" accesskey="t">Discussion</a>
             </li>
             <li id="ca-history">
               <a href="&amp;action=history" rel="archives" title="Les versions passées de cette page (avec leurs contributeurs) [h]" accesskey="h">Historique</a>
             </li>
             <li style="float:right;">ISSN 2443-8219</li>
           </ul>
-
-
-
+          
+          
+          
         </div>
-
+        
         <!-- END CONTENT-->
       </div>
-
+      
     </div>
-
-
+    
+    
     <!--BEGIN FOOTER-->
     <div class="row page-footer">
       <div class="col-lg-12 content-col">
@@ -2152,17 +2150,19 @@
           </ul>
         </div>
       </div>
-
+      
       <!--END FOOTER-->
     </div>
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
     <!--END PAGE-->
   </div>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script> -->
   <script src="./assets/becode-app.js"></script>
 </body>
 

@@ -1,1 +1,1 @@
-# javascript-challenge-solo
+# js-datavisualisation-challenge #

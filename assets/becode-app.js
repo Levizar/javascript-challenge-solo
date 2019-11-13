@@ -13,6 +13,7 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
     // getting the row of the table in an object, taking out the nodes and turning them into an arrayLike Object
     let tableRows = d3.selectAll(stringCSSPathToTheTableRows);
     tableRows = [...tableRows.nodes()];
+    
     // Collect data by putting it into arrays
     let tableHeaders = [];
     for (let i = 0; i < tableRows.length; i++) {
@@ -27,21 +28,36 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
                 }
             } else {                                                                                        // Next iterations to get the datas
                 countryData[j - 1] = arrCellsOfCurrentRow[j].innerText
+                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')
             }
         }
         if (i != 0) {                                                                                       // For every iteration except first, melt the arrays into an object and push it into the data array
             data[i - 1] = Object.fromEntries(tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]]))
         }
     }
-    return data;
+    return [data, tableHeaders];
 }
 
+// data from table One
 let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr")
+
+// convert data the absolute data from table One to relative data
+for( let i = 0; i < dataTableOne[0].length; i++){
+    for(let j = 2012; j >= 2002; j--){
+        dataTableOne[0][i][`${j}`] = dataTableOne[0][i][`${j}`] / dataTableOne[0][i]["2002"]
+    }   
+}
+
 console.log(dataTableOne);
 
-let dataTableTwo = getDataFromHTMLTable("#table2 tr")
-console.log(dataTableTwo);
 
+
+
+
+
+// data from tableTwo
+// let dataTableTwo = getDataFromHTMLTable("#table2 tr")
+// console.log(dataTableTwo);
 
 // Note: pour le graphique, le contenu du texte indique que ce qui compte est l'évolution des données dans le temps.
 // Il faut donc créer une courbe par pays en fonction du temps que l'on superposera sur un graphique

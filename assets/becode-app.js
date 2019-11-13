@@ -48,10 +48,16 @@ for( let i = 0; i < dataTableOne[0].length; i++){
     }   
 }
 
-console.log(dataTableOne);
+// console.log(dataTableOne);
 
 
-
+const insertSVGBeforeTable = () => {
+    let svg = d3.select("#table1").insertBefore
+    
+    console.log(svg)
+    // .insert("svg",":first-child")
+}
+insertSVGBeforeTable()
 
 
 

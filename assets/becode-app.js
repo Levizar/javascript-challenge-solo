@@ -28,7 +28,7 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
                 }
             } else {                                                                                        // Next iterations to get the datas
                 countryData[j - 1] = arrCellsOfCurrentRow[j].innerText
-                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')
+                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')                                // replacing "," by "." to avoid error during calculation
             }
         }
         if (i != 0) {                                                                                       // For every iteration except first, melt the arrays into an object and push it into the data array
@@ -51,13 +51,13 @@ for( let i = 0; i < dataTableOne[0].length; i++){
 // console.log(dataTableOne);
 
 
-const insertSVGBeforeTable = () => {
-    let svg = d3.select("#table1").insertBefore
+// const insertSVGBeforeTable = () => {
+//     let svg = d3.select("#mw-content-text :first-child")
     
-    console.log(svg)
-    // .insert("svg",":first-child")
-}
-insertSVGBeforeTable()
+//     // .insert("svg",":first-child")
+//     console.log(svg)
+// }
+
 
 
 

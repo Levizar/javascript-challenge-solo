@@ -13,7 +13,6 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
     // getting the row of the table in an object, taking out the nodes and turning them into an arrayLike Object
     let tableRows = d3.selectAll(stringCSSPathToTheTableRows);
     tableRows = [...tableRows.nodes()];
-    
     // Collect data by putting it into arrays
     let tableHeaders = [];
     for (let i = 0; i < tableRows.length; i++) {
@@ -48,15 +47,42 @@ for( let i = 0; i < dataTableOne[0].length; i++){
     }   
 }
 
-// console.log(dataTableOne);
+const getAllDataInOneArr = (dataToGather) => {
+    let bigArr = []
+    dataToGather.forEach( obj =>{
+        let valuesArr = Object.values(obj)
+        valuesArr.pop()
+        bigArr.push(...valuesArr)
+    })
+    console.log(bigArr);
+}
+getAllDataInOneArr(dataTableOne[0])
+
+// add SVG for datatableOne
+const dates = dataTableOne[1]
+dates.shift()
+const dataset = dataTableOne[0]
+// console.log(dataset);
+
+const w = "100%";
+const h = 300;
+const padding = 5;
+// const padding = 
+const xDataMin = d3.min(dates, d => d)
+const xDataMax = d3.max(dates, d => d)
+
+// A MODIFIER POUR Y 
+const yDataMin = d3.min(getAllDataInOneArr(dataset), d => d)
+const yDataMax = d3.max(getAllDataInOneArr(dataset), d => d)
 
 
-// const insertSVGBeforeTable = () => {
-//     let svg = d3.select("#mw-content-text :first-child")
-    
-//     // .insert("svg",":first-child")
-//     console.log(svg)
-// }
+const svg = d3.select('#mw-content-text').insert("svg", "#table1")
+                .attr("width", w)
+                .attr("height", h)
+const xScale = d3.scaleLinear().domain([xDataMin, xDataMax]).range([padding, w - padding])
+const yScale = d3.scaleLinear().domain([]).range([h - padding, padding])
+
+
 
 
 

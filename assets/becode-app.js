@@ -72,17 +72,18 @@ const parseToLineData = arrayOfCountry => {
         }
         parsedLineData.push(parsedObjCountry)
     }
-    console.log(parsedLineData);
+    return parsedLineData
 }
 
 // data from table One
 let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
 dataTableOne = parseToLineData(dataTableOne);
+console.log(dataTableOne);
 
 
 // Line charts
 //Make a line chart
-const lineChart = (lineData)=>{
+const lineChart = (dataSet)=>{
     // Defining the chart default param
     const width = 800;
     const height = width/2;
@@ -94,6 +95,8 @@ const lineChart = (lineData)=>{
       }
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
+
+    let lineData = dataSet;
     
     // Defining the chart scale
     const xScale = d3.scaleLinear()
@@ -126,12 +129,12 @@ g.append("g")
 g.selectAll(".line")
     .data(lineData)
     .enter()
-    // .append("path")
-    // .attr("d", d => lineGenerator(d.data))
-    // .style("fill", "none")
-    // .style("stroke", d => d.light)
-    // .style("stroke-width", 2)
-    // .style("stroke-linejoin", "round");
+//     .append("path")
+//     .attr("d", d => lineGenerator(d.data))
+//     .style("fill", "none")
+//     .style("stroke", d => d.light)
+//     .style("stroke-width", 2)
+//     .style("stroke-linejoin", "round");
 
 // const valueLabel = g.selectAll(".label")
 //     .data(lineData)

@@ -27,60 +27,82 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
                 }
             } else {                                                                                        // Next iterations to get the datas
                 countryData[j - 1] = arrCellsOfCurrentRow[j].innerText
-                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')                                // replacing "," by "." to avoid error during calculation
+                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')                                // replacing "," by "." for calculation
             }
         }
-        if (i != 0) {                                                                                       // For every iteration except first, melt the arrays into an object and push it into the data array
-            data[i - 1] = Object.fromEntries(tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]]))
+        if (i != 0) {                                                                                       // 
+            data[i - 1] = tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]])
         }
     }
-    return [data, tableHeaders];
+    return data;
+}
+
+const parseToLineData = arrayOfCountry => {
+    let parsedLineData = [];
+    let colorArray = [
+        '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+        '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+        '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+        '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+        '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+        '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+        '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+        '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+        '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+        '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
+    ];
+    for (let i = 0; i < arrayOfCountry.length; i++) {
+        let parsedObjCountry = {
+            data: []
+        };
+        for (let j = 0; j < arrayOfCountry[i].length; j++) {
+            if (j == 0) {
+                parsedObjCountry.key = arrayOfCountry[i][j][1]
+                parsedObjCountry.light = colorArray[i]
+            } else {
+                if (arrayOfCountry[i][j][1] != ":") {
+                    parsedObjCountry.data.push(arrayOfCountry[i][j])
+                }
+            }
+        }
+        for (let j = parsedObjCountry.data.length - 1; j >= 0; j--) {
+            parsedObjCountry.data[j][1] = parsedObjCountry.data[j][1] / parsedObjCountry.data[0][1];
+
+        }
+        parsedLineData.push(parsedObjCountry)
+    }
+    console.log(parsedLineData);
 }
 
 // data from table One
 let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr")
+// console.log(dataTableOne);
 
-// convert data the absolute data from table One to relative data
-for( let i = 0; i < dataTableOne[0].length; i++){
-    for(let j = 2012; j >= 2002; j--){
-        dataTableOne[0][i][`${j}`] = dataTableOne[0][i][`${j}`] / dataTableOne[0][i]["2002"]
-    }   
-}
-
-const getAllDataInOneArr = (dataToGather) => {
-    let bigArr = []
-    dataToGather.forEach( obj =>{
-        let valuesArr = Object.values(obj)
-        valuesArr.pop()
-        bigArr.push(...valuesArr)
-    })
-    console.log(bigArr);
-}
-getAllDataInOneArr(dataTableOne[0])
-
-// add SVG for datatableOne
-const dates = dataTableOne[1]
-dates.shift()
-const dataset = dataTableOne[0]
-// console.log(dataset);
-
-const w = "100%";
-const h = 300;
-const padding = 5;
-// const padding = 
-const xDataMin = d3.min(dates, d => d)
-const xDataMax = d3.max(dates, d => d)
-
-// A MODIFIER POUR Y 
-const yDataMin = d3.min(getAllDataInOneArr(dataset), d => d)
-const yDataMax = d3.max(getAllDataInOneArr(dataset), d => d)
+parseToLineData(dataTableOne)
 
 
-const svg = d3.select('#mw-content-text').insert("svg", "#table1")
-                .attr("width", w)
-                .attr("height", h)
-const xScale = d3.scaleLinear().domain([xDataMin, xDataMax]).range([padding, w - padding])
-const yScale = d3.scaleLinear().domain([]).range([h - padding, padding])
+
+
+// // convert data the absolute data from table One to relative data
+// for( let i = 0; i < dataTableOne[0].length; i++){
+//     for(let j = 2012; j >= 2002; j--){
+//         dataTableOne[0][i][`${j}`] = dataTableOne[0][i][`${j}`] / dataTableOne[0][i]["2002"]
+//     }   
+// }
+// dataTableOne[0].forEach(elm => Object.entries(elm).forEach(x => console.log(x)));
+
+
+// const getAllDataInOneArr = (dataToGather) => {
+//     let bigArr = []
+//     dataToGather.forEach( obj =>{
+//         let valuesArr = Object.values(obj)
+//         valuesArr.pop()
+//         bigArr.push(...valuesArr)
+//     })
+//     console.log(bigArr);
+// }
+// getAllDataInOneArr(dataTableOne[0])
+
 
 
 

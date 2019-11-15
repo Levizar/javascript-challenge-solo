@@ -26,12 +26,12 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
                     tableHeaders[j - 1] = arrCellsOfCurrentRow[j].innerText;
                 }
             } else {                                                                                        // Next iterations to get the datas
-                countryData[j - 1] = arrCellsOfCurrentRow[j].innerText
-                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')                                // replacing "," by "." for calculation
+                countryData[j - 1] = arrCellsOfCurrentRow[j].innerText;
+                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.')     ;                           // replacing "," by "." for calculation
             }
         }
         if (i != 0) {                                                                                       // 
-            data[i - 1] = tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]])
+            data[i - 1] = tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]]);
         }
     }
     return data;
@@ -56,29 +56,30 @@ const parseToLineData = arrayOfCountry => {
         let parsedObjCountry = {
             data: []
         };
+        let keys = ["date", "value"]
         for (let j = 0; j < arrayOfCountry[i].length; j++) {
             if (j == 0) {
-                parsedObjCountry.key = arrayOfCountry[i][j][1]
-                parsedObjCountry.light = colorArray[i]
+                parsedObjCountry.key = arrayOfCountry[i][j][1];
+                parsedObjCountry.light = colorArray[i];
             } else {
                 if (arrayOfCountry[i][j][1] != ":") {
-                    parsedObjCountry.data.push(arrayOfCountry[i][j])
+                    let currentDataCoupleToPush = Object.fromEntries(keys.map((a, index) => [keys[index], parseFloat(arrayOfCountry[i][j][index])]));
+                    parsedObjCountry.data.push(currentDataCoupleToPush);
                 }
             }
         }
-        for (let j = parsedObjCountry.data.length - 1; j >= 0; j--) {
-            parsedObjCountry.data[j][1] = parsedObjCountry.data[j][1] / parsedObjCountry.data[0][1];
 
+        for (let j = parsedObjCountry.data.length - 1; j >= 0; j--) {
+            parsedObjCountry.data[j].value = parsedObjCountry.data[j].value / parsedObjCountry.data[0].value;           
         }
-        parsedLineData.push(parsedObjCountry)
+        parsedLineData.push(parsedObjCountry);
     }
-    return parsedLineData
+    return parsedLineData;
 }
 
 // data from table One
 let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
 dataTableOne = parseToLineData(dataTableOne);
-console.log(dataTableOne);
 
 
 // Line charts
@@ -95,68 +96,109 @@ const lineChart = (dataSet)=>{
       }
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
-
-    let lineData = dataSet;
     
     // Defining the chart scale
     const xScale = d3.scaleLinear()
-    .domain([2012, 2018])                                                           // To modify
+    .domain([2002, 2012])                                                           // To modify
     .range([0, chartWidth]);
     
     const yScale = d3.scaleLinear()                                                 // To modify
-    .domain([0, 1.5])
+    .domain([0, 2])
     .range([chartHeight, 0]);
 
+    // Define the scaling for the scale
     const xAxisGenerator = d3.axisBottom(xScale)                                    // To modify
-    .tickValues(d3.range(2012, 2019, 1));
+    .tickValues(d3.range(2002, 2013, 1));
 
     const yAxisGenerator = d3.axisLeft(yScale)                                      // To modify
-    .tickValues(d3.range(0, 1.5, 0.05));
-   // #table1
+    .tickValues(d3.range(0, 2.1, 0.1));
+
+    // Creating a line generator function
+    const lineGenerator = d3.line()
+                    .x(d => xScale(d.date))
+                    .y(d => yScale(d.value));
+
+    // Function to get the last index of an array to get his position (see valueLabel)
+    const last = array => array[array.length - 1]
+
+    // Inserting the SVG Canvas in the html
+    const svg = d3.select("#mw-content-text").insert(`svg`, "#table1").attr("id", "SVGTable1").attr("width", `${width}`).attr("height", `${height}`);
     
-const svg = d3.select("#mw-content-text").insert(`svg`, "#table1").attr("width", `${width}`).attr("height", `${height}`);
-  
-const g = svg.append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    let lineData = dataSet;
+    // Inserting a button for data filter
+    d3.select("#mw-content-text")
+      .insert("select", "#SVGTable1")
+      .attr("id", "#selectButton")
+      .style("margin-top", "15px")
+      .style("margin-bottom", "15px")
+        .selectAll('myOptions')
+     	.data(lineData)
+        .enter()
+    	.append('option')
+        .text( d => d.key ) // text showed in the menu
+        .attr("value", d => d ) // corresponding value returned by the button
+    
+        // let lineData = d3.select("#selectButton").value;
+        // console.log(lineData)
 
-g.append("g")
-    .call(xAxisGenerator)
-    .attr("transform", `translate(0, ${chartHeight})`);
 
-g.append("g")
-    .call(yAxisGenerator);
+        // Defining the scale and drawing area
+    const g = svg.append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+    
+    // Getting the X Axis and putting it at the bottom (the max Y position from top to down)
+    g.append("g")
+        .call(xAxisGenerator)
+        .attr("transform", `translate(0, ${chartHeight})`);
 
-g.selectAll(".line")
-    .data(lineData)
-    .enter()
-//     .append("path")
-//     .attr("d", d => lineGenerator(d.data))
-//     .style("fill", "none")
-//     .style("stroke", d => d.light)
-//     .style("stroke-width", 2)
-//     .style("stroke-linejoin", "round");
+    // Getting the Y axis at the 0 from g group
+    g.append("g")
+        .call(yAxisGenerator);
 
-// const valueLabel = g.selectAll(".label")
-//     .data(lineData)
-//   .enter().append("g")
-//     .attr("transform", d => `translate(${xScale(last(d.data).date)}, ${yScale(last(d.data).value)})`);
+    // Defining the line(s)
+    g.selectAll(".line")
+        .data(lineData)
+        .enter()
+        .append("path")
+        .attr("d", d => lineGenerator(d.data))                                      // lineGenerator: d3.line().attr(X).attr(Y)
+        .style("fill", "none")
+        .style("stroke", d => d.light)
+        .style("stroke-width", 2)
+        .style("stroke-linejoin", "round");
 
-// valueLabel.append("circle")                                                      // à modifier avec un hover pour donner la valeur de Y à l'endroit où l'on est
-//   .attr("r", 4)
-//   .style("stroke", "white")
-//   .style("fill", d => d.light);
+    // Creating a g group at the position of the last point of the chart
+    const valueLabel = g.selectAll(".label")
+        .data(lineData)
+        .enter().append("g")
+        .attr("transform", d => `translate(${xScale(last(d.data).date)}, ${yScale(last(d.data).value)})`);
+        
+    valueLabel.append("circle")
+    .attr("r", 3)
+    .style("stroke", "white")
+    .style("fill", d => d.light);
 
-// valueLabel.append("text")
-//   .text(d => last(d.data).value)
-//   .attr("dy", 5)
-//   .attr("dx", 10)
-//   .style("font-family", "monospace")
-//   .style("fill", d => d.dark);
+    valueLabel.append("text")
+    .text(d => d.key)
+    .attr("dy", 5)
+    .attr("dx", 10)
+    .style("font-family", "monospace")
+    .style("fill", d => d.light);
 
-// return svg.node()
+    // Return the node so it can be stored in a variable
+    return svg.node() 
 }
 
 lineChart(dataTableOne)
+
+
+
+// sert à check les valeurs déviant fortement
+// dataTableOne.forEach( obj =>{
+//     obj.data.forEach(objdata => {
+//        objdata.value > 2 ? console.log(obj.key) : 0
+//     });
+// })
+console.log(dataTableOne)
 
 
 

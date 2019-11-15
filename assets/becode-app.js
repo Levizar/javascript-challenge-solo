@@ -37,6 +37,7 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
     return data;
 }
 
+// This function parse the data for the line charts and transform it to % data using the data from the initial value as reference
 const parseToLineData = arrayOfCountry => {
     let parsedLineData = [];
     let colorArray = [
@@ -75,33 +76,86 @@ const parseToLineData = arrayOfCountry => {
 }
 
 // data from table One
-let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr")
-// console.log(dataTableOne);
-
-parseToLineData(dataTableOne)
+let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
+dataTableOne = parseToLineData(dataTableOne);
 
 
+// Line charts
+//Make a line chart
+const lineChart = (lineData)=>{
+    // Defining the chart default param
+    const width = 800;
+    const height = width/2;
+    const margin = {
+        left : 25,
+        bottom : 20,
+        right : 60,
+        top : 10,
+      }
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+    
+    // Defining the chart scale
+    const xScale = d3.scaleLinear()
+    .domain([2012, 2018])                                                           // To modify
+    .range([0, chartWidth]);
+    
+    const yScale = d3.scaleLinear()                                                 // To modify
+    .domain([0, 1.5])
+    .range([chartHeight, 0]);
+
+    const xAxisGenerator = d3.axisBottom(xScale)                                    // To modify
+    .tickValues(d3.range(2012, 2019, 1));
+
+    const yAxisGenerator = d3.axisLeft(yScale)                                      // To modify
+    .tickValues(d3.range(0, 1.5, 0.05));
+   // #table1
+    
+const svg = d3.select("#mw-content-text").insert(`svg`, "#table1").attr("width", `${width}`).attr("height", `${height}`);
+  
+const g = svg.append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+g.append("g")
+    .call(xAxisGenerator)
+    .attr("transform", `translate(0, ${chartHeight})`);
+
+g.append("g")
+    .call(yAxisGenerator);
+
+g.selectAll(".line")
+    .data(lineData)
+    .enter()
+    // .append("path")
+    // .attr("d", d => lineGenerator(d.data))
+    // .style("fill", "none")
+    // .style("stroke", d => d.light)
+    // .style("stroke-width", 2)
+    // .style("stroke-linejoin", "round");
+
+// const valueLabel = g.selectAll(".label")
+//     .data(lineData)
+//   .enter().append("g")
+//     .attr("transform", d => `translate(${xScale(last(d.data).date)}, ${yScale(last(d.data).value)})`);
+
+// valueLabel.append("circle")                                                      // à modifier avec un hover pour donner la valeur de Y à l'endroit où l'on est
+//   .attr("r", 4)
+//   .style("stroke", "white")
+//   .style("fill", d => d.light);
+
+// valueLabel.append("text")
+//   .text(d => last(d.data).value)
+//   .attr("dy", 5)
+//   .attr("dx", 10)
+//   .style("font-family", "monospace")
+//   .style("fill", d => d.dark);
+
+// return svg.node()
+}
+
+lineChart(dataTableOne)
 
 
-// // convert data the absolute data from table One to relative data
-// for( let i = 0; i < dataTableOne[0].length; i++){
-//     for(let j = 2012; j >= 2002; j--){
-//         dataTableOne[0][i][`${j}`] = dataTableOne[0][i][`${j}`] / dataTableOne[0][i]["2002"]
-//     }   
-// }
-// dataTableOne[0].forEach(elm => Object.entries(elm).forEach(x => console.log(x)));
-
-
-// const getAllDataInOneArr = (dataToGather) => {
-//     let bigArr = []
-//     dataToGather.forEach( obj =>{
-//         let valuesArr = Object.values(obj)
-//         valuesArr.pop()
-//         bigArr.push(...valuesArr)
-//     })
-//     console.log(bigArr);
-// }
-// getAllDataInOneArr(dataTableOne[0])
 
 
 
@@ -109,6 +163,15 @@ parseToLineData(dataTableOne)
 
 
 
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // data from tableTwo
 // let dataTableTwo = getDataFromHTMLTable("#table2 tr")
 // console.log(dataTableTwo);

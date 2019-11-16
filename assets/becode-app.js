@@ -1,9 +1,12 @@
 /* 
 // WRITE YOUR JAVASCRIPT BELOW THIS COMMENT 
 Your name : Bartoletti Brice
-Date : 12/11/2019
-Contact information :  
-What does this script do ? 
+Starting Date : 12/11/2019
+Contact information : bartolettibrice@gmail.com
+What does this script do ?
+
+This script inject 3 charts in the html document
+The data for the first chart are fetched and those for the 2 last charts are directly taken from the HTML
 ...
 */
 
@@ -85,6 +88,9 @@ const parseToLineData = arrayOfCountry => {
 //////////////                                                                                                  //////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// !!! There is one and only one line in this chart so there isn't any .enter() method called !!!
+// The .enter() method is necessary to call several data
 
 const lineChart = (dataSet) => {
     // Defining the chart default param
@@ -192,7 +198,7 @@ const lineChart = (dataSet) => {
 
         yAxisGenerator = d3.axisLeft(yScale)
             .tickValues(d3.range(0, maxYaxis + 0.1, 0.1))
-        // .tickFormat(formatter);                                   // need to modify
+            // .tickFormat(formatter)                                  // need to modify
 
         xAxis.call(xAxisGenerator)
 
@@ -227,10 +233,10 @@ const lineChart = (dataSet) => {
             .text(d => d.key)
             .style("fill", d => d.light)
     }
+    // Use Update once to initialize the chart with the good data
     update()
-
-    d3.select("#selectButton").on("change", update)
-
+    // Call update when the button is used
+     d3.select("#selectButton").on("change", update)
 }
 
 // Calling the line chart function for the first table data

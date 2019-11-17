@@ -155,6 +155,8 @@ const lineChart = (dataSet) => {
     // Defining one line, its data will be updated at the end of the function
     let line = g
         .append("path")
+        .style("stroke-linejoin", "round")
+        .style("stroke-width", 3);
 
     // Creating a g group at the position of the last point of the chart
     const valueLabel = g
@@ -170,7 +172,7 @@ const lineChart = (dataSet) => {
     const countryName = valueLabel.append("text")
         .text(d => d.key)
         .attr("dy", -15)
-        .attr("dx", -20)
+        .attr("dx", -40)
         .style("font-family", "monospace")
         .style("fill", d => d.light);
 
@@ -191,7 +193,7 @@ const lineChart = (dataSet) => {
             .domain([0, maxYaxis]) //
             .range([chartHeight, 0]);
 
-        let formatter = d3.format(".0%")                             // make percentage in tick formater
+        // let formatter = d3.format(".0%")                             // make percentage in tick formater
 
         xAxisGenerator = d3.axisBottom(xScale)
             .tickValues(d3.range(data[0].date, last(data).date + 1, 1));
@@ -211,8 +213,7 @@ const lineChart = (dataSet) => {
             .attr("d", d => lineGenerator(d.data))                                      // lineGenerator: d3.line().attr(X).attr(Y)
             .style("fill", "none")
             .style("stroke", d => d.light)
-            .style("stroke-width", 2)
-            .style("stroke-linejoin", "round");
+            
 
         valueLabel
             .data(lineData)
@@ -240,19 +241,16 @@ const lineChart = (dataSet) => {
 }
 
 // Calling the line chart function for the first table data
-
 let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
 dataTableOne = parseToLineData(dataTableOne);
 lineChart(dataTableOne)
 
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // data from tableTwo
-// let dataTableTwo = getDataFromHTMLTable("#table2 tr")
-// console.log(dataTableTwo);
+let dataTableTwo = getDataFromHTMLTable("#table2 tr")
+console.log(dataTableTwo);
+
+
+// Inspiration for the bar intersection
+// https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
+
 

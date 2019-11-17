@@ -253,4 +253,7 @@ console.log(dataTableTwo);
 // Inspiration for the bar intersection
 // https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
 
+// make element follow a path
+// http://bl.ocks.org/methodofaction/3824661
+
 

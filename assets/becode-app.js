@@ -43,6 +43,8 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
 // This function parse the data for the line charts and transform it to % data using the data from the initial value as reference
 const parseToLineData = arrayOfCountry => {
     let parsedLineData = [];
+    // Adding an array of color to give a color property
+    // That part could be improved by using the d3 scale color ! 
     let colorArray = [
         '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
         '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',

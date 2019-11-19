@@ -558,8 +558,8 @@ const createRealTimeGraphData = async () => {
 
 
     let line = g
-        .data(dataSet)
-        .enter()
+        .datum(dataSet)
+        // .enter()
         .append("path")
         .attr("d", d => lineGenerator(d))
         

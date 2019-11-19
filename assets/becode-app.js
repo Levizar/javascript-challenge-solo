@@ -11,6 +11,8 @@ The data for the first chart are fetched and those for the 2 last charts are dir
 */
 
 // This function get datas from tables from an HTML using the D3 selector
+
+
 const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
     let data = [];
     // getting the row of the table in an object, taking out the nodes and turning them into an arrayLike Object
@@ -41,7 +43,7 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
 }
 
 // This function parse the data for the line charts and transform it to % data using the data from the initial value as reference
-const parseToLineData = arrayOfCountry => {
+const parseToLineData = (arrayOfCountry, percentage = false) => {
     let parsedLineData = [];
     // Adding an array of color to give a color property
     // That part could be improved by using the d3 scale color ! 
@@ -74,9 +76,10 @@ const parseToLineData = arrayOfCountry => {
                 }
             }
         }
-
-        for (let j = parsedObjCountry.data.length - 1; j >= 0; j--) {
-            parsedObjCountry.data[j].value = parsedObjCountry.data[j].value / parsedObjCountry.data[0].value;
+        if (percentage) {
+            for (let j = parsedObjCountry.data.length - 1; j >= 0; j--) {
+                parsedObjCountry.data[j].value = parsedObjCountry.data[j].value / parsedObjCountry.data[0].value;
+            }
         }
         parsedLineData.push(parsedObjCountry);
     }
@@ -97,7 +100,9 @@ const parseToLineData = arrayOfCountry => {
 
 const lineChart = (dataSet) => {
     // Defining the chart default param
-    const width = 800;
+
+    const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
+    const width = parentMaxWidth[0].offsetWidth;
     const height = width / 2;
     const margin = {
         left: 25,
@@ -158,6 +163,7 @@ const lineChart = (dataSet) => {
     // Defining one line, its data will be updated at the end of the function
     let line = g
         .append("path")
+        .attr("id", "theLine")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
 
@@ -196,14 +202,11 @@ const lineChart = (dataSet) => {
             .domain([0, maxYaxis]) //
             .range([chartHeight, 0]);
 
-        // let formatter = d3.format(".0%")                             // make percentage in tick formater
-
         xAxisGenerator = d3.axisBottom(xScale)
             .tickValues(d3.range(data[0].date, last(data).date + 1, 1));
 
         yAxisGenerator = d3.axisLeft(yScale)
             .tickValues(d3.range(0, maxYaxis + 0.1, 0.1))
-            // .tickFormat(formatter)                                  // need to modify
 
         xAxis.call(xAxisGenerator)
 
@@ -216,7 +219,7 @@ const lineChart = (dataSet) => {
             .attr("d", d => lineGenerator(d.data))                                      // lineGenerator: d3.line().attr(X).attr(Y)
             .style("fill", "none")
             .style("stroke", d => d.light)
-            
+
 
         valueLabel
             .data(lineData)
@@ -237,110 +240,392 @@ const lineChart = (dataSet) => {
             .text(d => d.key)
             .style("fill", d => d.light)
 
-    let mouseG = svg.append("g")
-      .attr("class", "mouse-over-effects");
 
-    mouseG.append("path") // this is the black vertical line to follow mouse
-      .attr("class", "mouse-line")
-      .style("stroke", "black")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-      
-    let lines = document.getElementsByClassName('line');
+    }
+
+
+    //     group for Mouse tracker      //
+    let mouseG = g.append("g")
+        .attr("class", "mouse-over-effects");
+
+    // this is the black vertical line to follow mouse
+    mouseG.append("path")
+        .attr("class", "mouse-line")
+        .style("stroke", "black")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
 
     let mousePerLine = mouseG.selectAll('.mouse-per-line')
-      .data(lineData)
-      .enter()
-      .append("g")
-      .attr("class", "mouse-per-line");
+        .data(lineData)
+        .enter()
+        .append("g")
+        .attr("class", "mouse-per-line");
 
-    mousePerLine.append("circle")
-      .attr("r", 7)
-      .style("stroke", "black")
-      .style("fill", "none")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
+    let mouseLineCircle = mousePerLine.append("circle")
+        .attr("r", 7)
+        .style("stroke", "black")
+        .style("fill", "none")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
 
-    mousePerLine.append("text")
-      .attr("transform", "translate(10,3)");
+    let bullet = mousePerLine.append("g");
+    let textbullet = bullet.append("text")
+        .attr("class", "mouse-per-line");
 
-    mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
-      .attr('width', width) // can't catch mouse events on a g element
-      .attr('height', height)
-      .attr('fill', 'none')
-      .attr('pointer-events', 'all')
-      .on('mouseout', function() { // on mouse out hide line, circles and text
-        d3.select(".mouse-line")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "0");
-        d3.selectAll(".mouse-per-line text")
-          .style("opacity", "0");
-      })
-      .on('mouseover', function() { // on mouse in show line, circles and text
-        d3.select(".mouse-line")
-          .style("opacity", "1");
-        d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "1");
-        d3.selectAll(".mouse-per-line text")
-          .style("opacity", "1");
-      })
-      .on('mousemove', function() { // mouse moving over canvas
-        let mouse = d3.mouse(this);
-        d3.select(".mouse-line")
-          .attr("d", function() {
-            let d = "M" + mouse[0] + "," + height;
-            d += " " + mouse[0] + "," + 0;
-            return d;
-          });
+    const mouseTracker = () => {
+        mouseG.append('svg:rect')                                       // append a rect to catch mouse movements on SVG
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'none')
+            .attr('pointer-events', 'all')
+            .on('mouseout', () => {                                    // mouse out : hide line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "0");
+            })
+            .on('mouseover', () => {                                // mouse in : show line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "1");
+            })
+            .on('mousemove', function () {                          // mouse moving over SVG
+                let mouse = d3.mouse(this);
+                d3.select(".mouse-line")
+                    .attr("d", () => {
+                        let d = `M${mouse[0]},${height} ${mouse[0]},0`;
+                        return d;
+                    });
 
-        d3.selectAll(".mouse-per-line")
-          .attr("transform", function(d, i) {
-            console.log(width/mouse[0])
-            let xDate = xScale.invert(mouse[0]),
-                bisect = d3.bisector(d => d.date).right;
-                idx = bisect(d.value, xDate);
-            
-            let beginning = 0,
-                end = lines[i].getTotalLength(),
-                target = null;
+                d3.selectAll(".mouse-per-line")
+                    .attr("transform", function (d, i) {
+                        //return the X of the mouse
+                        let xDate = xScale.invert(mouse[0]);
+                        if (xDate > last(lineData[0].data).date) {
+                            xDate = last(lineData[0].data).date;
+                        }
+                        //Function in Vanilla JS to get the Y of the line
+                        const getapproximativeYwithX = () => {
+                            let floorDate = Math.floor(xDate)
+                            let indexOfFloorDateY = -1
+                            for (let i = 0; i < lineData[0].data.length; i++) {
+                                if (lineData[0].data[i].date == floorDate) {
+                                    indexOfFloorDateY = i
+                                }
+                            }
+                            let y
+                            if (floorDate == last(lineData[0].data).date) {
+                                y = last(lineData[0].data).value
 
-            while (true){
-              target = Math.floor((beginning + end) / 2);
-              pos = lines[i].getPointAtLength(target);
-              if ((target === end || target === beginning) && pos.x !== mouse[0]) {
-                  break;
-              }
-              if (pos.x > mouse[0])      end = target;
-              else if (pos.x < mouse[0]) beginning = target;
-              else break; //position found
-            }
-            
-            d3.select(this).select('text')
-              .text(y.invert(pos.y).toFixed(2));
-              
-            return "translate(" + mouse[0] + "," + pos.y +")";
-          });
-      });
+                            } else {
+                                let y0 = lineData[0].data[indexOfFloorDateY].value;
+                                let y1 = lineData[0].data[indexOfFloorDateY + 1].value;
+                                let deltaY = y1 - y0; // This is equal to the dy/dx because dx = 1
+                                let deltaX = xDate - floorDate;
+                                let diffY = deltaX * (deltaY);
+                                y = lineData[0].data[indexOfFloorDateY].value + diffY;
+                            }
+                            return y
+                        }
+                        let y = getapproximativeYwithX()
+
+                        d3.selectAll(".mouse-per-line circle")
+                            .attr("cx", xScale(xDate))
+                            .attr("cy", yScale(y));
+                        bullet.attr("transform", `translate(${xScale(xDate) - 10},${yScale(y) - 15})`);
+                        textbullet.text(y.toFixed(4))
+                            .style("color", "rebeccapurple");  // colot not working
+                    });
+            });
     }
-    
-    
-    
     // Use Update once to initialize the chart with the good data
-    update()
+    update();
     // Call update when the button is used
-     d3.select("#selectButton").on("change", update)
+    d3.select("#selectButton").on("change", update);
+    mouseTracker();
 }
 
+
+
 // Calling the line chart function for the first table data
-let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
-dataTableOne = parseToLineData(dataTableOne);
-lineChart(dataTableOne)
+// let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
+// dataTableOne = parseToLineData(dataTableOne, true);
+// lineChart(dataTableOne)
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////                                                                                                  //////////////
+//////////////                                  SIMPLE CHART FUNCTION                                           //////////////
+//////////////                                                                                                  //////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const simpleChart = (dataSet) => {
+    // Defining the chart default param
+
+    const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
+    const width = parentMaxWidth[0].offsetWidth;
+    const height = width / 2;
+    const margin = {
+        left: 25,
+        bottom: 20,
+        right: 60,
+        top: 20,
+    }
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+
+    // Inserting the SVG Canvas in the html
+    const svg = d3.select("#mw-content-text").insert(`svg`, "#table2").attr("id", "SVGTable2").attr("width", `${width}`).attr("height", `${height}`);
+
+    // Inserting a button for data filter
+    d3.select("#mw-content-text")
+        .insert("select", "#SVGTable2")
+        .attr("id", "selectButton")
+        .style("margin-top", "15px")
+        .style("margin-bottom", "15px")
+        .selectAll('myOptions')
+        .data(dataSet)
+        .enter()
+        .append('option')
+        .text(d => d.key) // text showed in the menu
+        .attr("value", d => d.key) // corresponding value returned by the button
+
+    // filter the data to initialize the chart with the first option of the select button
+    let choosenCountry = d3.select("#selectButton").property("value")
+    let rectData = dataSet.filter(d => d.key == choosenCountry)
+
+    // Defining the chart scale. The value will be given in the update function
+    let xScale = d3.scaleLinear()
+    let yScale = d3.scaleLinear()
+
+    // initialiazing the scaling for the scale, .tickvalue will be added in update function
+    let xAxisGenerator = d3.axisBottom(xScale)
+    let yAxisGenerator = d3.axisLeft(yScale)
+
+    // Creating a line generator function
+    let lineGenerator = d3.line()
+        .x(d => xScale(d.date))
+        .y(d => yScale(d.value));
+
+    // Function to get the last index of an array to get his position (see valueLabel)
+    const last = array => array[array.length - 1]
+
+    // Defining the scale and drawing area inside the svg
+    const g = svg.append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Initialiazing the axes, they would be redefined in the update function
+    let xAxis = g.append("g")
+        .call(xAxisGenerator)
+        .attr("transform", `translate(0, ${chartHeight})`);
+    let yAxis = g.append("g")
+        .call(yAxisGenerator);
+
+    // Defining one line, its data will be updated at the end of the function
+    let rect = g
+        .data(rectData)
+        .enter()
+        .append("rect")
+        .attr("id", "theLine")
+        .style("stroke-linejoin", "round")
+        .style("stroke-width", 3);
+
+    // Creating a g group at the position of the last point of the chart
+    const valueLabel = g
+        .append("g")
+        .data(rectData)
+        .attr("transform", d => `translate(${xScale(last(d.data).date)}, ${yScale(last(d.data).value)})`);       //////////TO MODIFY !
+
+    const update = () => {
+        choosenCountry = d3.select("#selectButton").property("value")
+        rectData = dataSet.filter(d => d.key == choosenCountry)
+
+        let data = rectData[0].data
+        let valueArray = []
+        data.forEach(datacouple => valueArray.push(datacouple.value));
+        let maxYaxis = Math.ceil(d3.max(valueArray) * 10) / 10
+
+        xScale = d3.scaleLinear()
+            .domain([0, 2])
+            .range([0, chartWidth]);
+
+        yScale = d3.scaleLinear()
+            .domain([0, maxYaxis]) //
+            .range([chartHeight, 0]);
+
+        xAxisGenerator = d3.axisBottom(xScale)
+            .tickValues(d3.range(data[0].date, last(data).date + 1, 1));
+
+        yAxisGenerator = d3.axisLeft(yScale)
+            .tickValues(d3.range(0, maxYaxis + 0.1, 0.1))
+
+        xAxis.call(xAxisGenerator)
+
+        yAxis.call(yAxisGenerator);
+
+        line
+            .data(rectData)
+            .transition()
+            .duration(1000)
+            .attr("d", d => lineGenerator(d.data))                                      // lineGenerator: d3.line().attr(X).attr(Y)
+            .style("fill", "none")
+            .style("stroke", d => d.light)
+
+
+        valueLabel
+            .data(rectData)
+            .transition()
+            .duration(1000)
+            .attr("transform", d => `translate(${xScale(last(d.data).date)}, ${yScale(last(d.data).value)})`);
+
+        circle
+            .data(rectData)
+            .transition()
+            .duration(1000)
+            .style("fill", d => d.light);
+
+        countryName
+            .data(rectData)
+            .transition()
+            .duration(1000)
+            .text(d => d.key)
+            .style("fill", d => d.light)
+
+
+    }
+
+
+    //     group for Mouse tracker      //
+    let mouseG = g.append("g")
+        .attr("class", "mouse-over-effects");
+
+    // this is the black vertical line to follow mouse
+    mouseG.append("path")
+        .attr("class", "mouse-line")
+        .style("stroke", "black")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
+
+    let mousePerLine = mouseG.selectAll('.mouse-per-line')
+        .data(rectData)
+        .enter()
+        .append("g")
+        .attr("class", "mouse-per-line");
+
+    let mouseLineCircle = mousePerLine.append("circle")
+        .attr("r", 7)
+        .style("stroke", "black")
+        .style("fill", "none")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
+
+    let bullet = mousePerLine.append("g");
+    let textbullet = bullet.append("text")
+        .attr("class", "mouse-per-line");
+
+    const mouseTracker = () => {
+        mouseG.append('svg:rect')                                       // append a rect to catch mouse movements on SVG
+            .attr('width', width)
+            .attr('height', height)
+            .attr('fill', 'none')
+            .attr('pointer-events', 'all')
+            .on('mouseout', () => {                                    // mouse out : hide line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "0");
+            })
+            .on('mouseover', () => {                                // mouse in : show line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "1");
+            })
+            .on('mousemove', function () {                          // mouse moving over SVG
+                let mouse = d3.mouse(this);
+                d3.select(".mouse-line")
+                    .attr("d", () => {
+                        let d = `M${mouse[0]},${height} ${mouse[0]},0`;
+                        return d;
+                    });
+
+                d3.selectAll(".mouse-per-line")
+                    .attr("transform", function (d, i) {
+                        //return the X of the mouse
+                        let xDate = xScale.invert(mouse[0]);
+                        if (xDate > last(rectData[0].data).date) {
+                            xDate = last(rectData[0].data).date;
+                        }
+                        //Function in Vanilla JS to get the Y of the line
+                        const getapproximativeYwithX = () => {
+                            let floorDate = Math.floor(xDate)
+                            let indexOfFloorDateY = -1
+                            for (let i = 0; i < rectData[0].data.length; i++) {
+                                if (rectData[0].data[i].date == floorDate) {
+                                    indexOfFloorDateY = i
+                                }
+                            }
+                            let y
+                            if (floorDate == last(rectData[0].data).date) {
+                                y = last(rectData[0].data).value
+
+                            } else {
+                                let y0 = rectData[0].data[indexOfFloorDateY].value;
+                                let y1 = rectData[0].data[indexOfFloorDateY + 1].value;
+                                let deltaY = y1 - y0; // This is equal to the dy/dx because dx = 1
+                                let deltaX = xDate - floorDate;
+                                let diffY = deltaX * (deltaY);
+                                y = rectData[0].data[indexOfFloorDateY].value + diffY;
+                            }
+                            return y
+                        }
+                        let y = getapproximativeYwithX()
+
+                        d3.selectAll(".mouse-per-line circle")
+                            .attr("cx", xScale(xDate))
+                            .attr("cy", yScale(y));
+                        bullet.attr("transform", `translate(${xScale(xDate) - 10},${yScale(y) - 15})`);
+                        textbullet.text(y.toFixed(4))
+                            .style("color", "rebeccapurple");  // colot not working
+                    });
+            });
+    }
+    // Use Update once to initialize the chart with the good data
+    update();
+    // Call update when the button is used
+    d3.select("#selectButton").on("change", update);
+    mouseTracker();
+}
+
+// The table 2 is about prisonner ==> Moving tableTwo from the bad place to the right place
+let table2 = document.getElementById("table2").cloneNode(true);
+let table2Copy = document.importNode(table2, true);
+document.getElementById('mw-content-text').removeChild(document.getElementById("table2"))
+let target = document.querySelector("#mw-content-text > p:nth-child(32)")
+document.getElementById('mw-content-text').insertBefore(table2, target);
+
+
+// d3.select("#mw-content-text").insert(table2,"#mw-content-text > p:nth-child(35)")
 
 // data from tableTwo
-let dataTableTwo = getDataFromHTMLTable("#table2 tr")
+// let dataTableTwo = getDataFromHTMLTable("#table2 tr")
 // console.log(dataTableTwo);
+// dataTableTwo = parseToLineData(dataTableTwo, true)
 
+// console.log(dataTableTwo);
+// simpleChart(dataTableTwo)
 
 
 

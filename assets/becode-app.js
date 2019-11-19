@@ -514,7 +514,6 @@ const createRealTimeGraphData = async () => {
     let keys = ["x", "y"]
     let dataSet = [];
     data.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
-    console.log(dataSet);
 
     // Defining the chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
@@ -544,10 +543,31 @@ const createRealTimeGraphData = async () => {
     let xAxisGenerator = d3.axisBottom(xScale)
     let yAxisGenerator = d3.axisLeft(yScale)
 
+    let lineGenerator = d3.line()
+        .x(d => xScale(d.x))
+        .y(d => yScale(d.y));
+
     // Inserting the SVG Canvas in the html
-    const svg = d3.select("#mw-content-text").insert(`svg`, "#bodyContent").attr("id", "SVGOnlineData").attr("width", `${width}`).attr("height", `${height}`);
+    const svg = d3.select("#content").insert(`svg`, "#bodyContent").attr("id", "SVGOnlineData").attr("width", `${width}`).attr("height", `${height}`);
     const g = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Calling the  Axis
+    g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
+    g.append("g").call(d3.axisLeft(yScale));
+
+
+    let line = g
+        .data(dataSet)
+        .enter()
+        .append("path")
+        .attr("d", d => lineGenerator(d))
+        
+        /*lineGenerator(d)*/
+        .attr("id", "theLine")
+        .style("stroke-linejoin", "round")
+        .style("stroke-width", 3);
+
 
 }
 createRealTimeGraphData();

@@ -509,6 +509,8 @@ const RequestData = async () => {
 
 const createRealTimeGraphData = async () => {
     const data = [];
+    
+    const reset = async () => {
     const getData = await RequestData()
     data.push(...getData)
     let keys = ["x", "y"]
@@ -559,15 +561,13 @@ const createRealTimeGraphData = async () => {
 
     let line = g
         .datum(dataSet)
-        // .enter()
         .append("path")
         .attr("d", d => lineGenerator(d))
-        
-        /*lineGenerator(d)*/
-        .attr("id", "theLine")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
-
-
+    }
+    setInterval( () => {
+        d3.select("#SVGOnlineData").remove
+    }  ,1000)
 }
 createRealTimeGraphData();

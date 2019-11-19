@@ -353,9 +353,9 @@ const lineChart = (dataSet) => {
 
 
 // Calling the line chart function for the first table data
-// let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
-// dataTableOne = parseToLineData(dataTableOne, true, true); // double true for parsefloating the data AND transform it in relative data
-// lineChart(dataTableOne)
+let dataTableOne = getDataFromHTMLTable("#table1 > tbody:nth-child(3) > tr");
+dataTableOne = parseToLineData(dataTableOne, true, true); // double true for parsefloating the data AND transform it in relative data
+lineChart(dataTableOne)
 
 
 
@@ -430,6 +430,36 @@ const barChart = (dataSet) => {
         g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
         g.append("g").call(d3.axisLeft(yScale));
 
+        function hover() {
+            d3.select(this)
+            .style("opacity", "0.8");
+            
+            g.append("g")
+            .attr("id", "textHover")
+            .selectAll("text")
+            .data(rectData)
+            .enter()
+            .append("text")
+            .attr("x", d => xScale(d.date) + xScale.bandwidth()/2 - 10)
+            .attr("y", d => yScale(d.value) - 10)
+            .text(d => d.value)
+            .style('font-weight', 'bold')
+            .style('font-size', '1.7rem')
+            .style("fill", color)
+        }
+        function unHover() {
+            d3.select(this)
+            .style("opacity", "1");
+
+            d3.select("#textHover").remove();
+        }
+            
+           // g.selectAll("text")
+           // .data(rectData)
+           // .enter()
+           // .append("text")
+           // .text(d => console.log(d))
+
         let gRect = g.selectAll("rect")
             .data(rectData)
             .enter()
@@ -439,14 +469,8 @@ const barChart = (dataSet) => {
             .attr("width", d => xScale.bandwidth())
             .attr("height", d => chartHeight - yScale(d.value))
             .attr('fill', `${color}`)
-            .on("mouseover", () => {
-                g.selectAll("text")
-                .data(rectData)
-                .enter()
-                .append("text")
-                .text( d => d.value)
-            })
-            // .on("mouseleave", unhover())
+            .on("mouseover", hover)
+            .on("mouseleave", unHover)
 
 
 

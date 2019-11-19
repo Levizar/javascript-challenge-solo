@@ -24,18 +24,18 @@ const getDataFromHTMLTable = (stringCSSPathToTheTableRows) => {
         const arrCellsOfCurrentRow = [...tableRows[i].cells];
         let countryData = [];
         for (let j = 1; j < arrCellsOfCurrentRow.length; j++) {
-            if (i == 0) {                                                                                   // First iteration for the data Names 
+            if (i == 0) { // First iteration for the data Names 
                 if (j == 1) {
                     tableHeaders[j - 1] = "country";
                 } else {
                     tableHeaders[j - 1] = arrCellsOfCurrentRow[j].innerText;
                 }
-            } else {                                                                                        // Next iterations to get the datas
+            } else { // Next iterations to get the datas
                 countryData[j - 1] = arrCellsOfCurrentRow[j].innerText;
-                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.');                           // replacing "," by "." for calculation
+                countryData[j - 1] = countryData[j - 1].replace(/[,]/g, '.'); // replacing "," by "." for calculation
             }
         }
-        if (i != 0) {                                                                                       // 
+        if (i != 0) { // 
             data[i - 1] = tableHeaders.map((a, i) => [tableHeaders[i], countryData[i]]);
         }
     }
@@ -216,7 +216,7 @@ const lineChart = (dataSet) => {
             .data(lineData)
             .transition()
             .duration(1000)
-            .attr("d", d => lineGenerator(d.data))                                      // lineGenerator: d3.line().attr(X).attr(Y)
+            .attr("d", d => lineGenerator(d.data)) // lineGenerator: d3.line().attr(X).attr(Y)
             .style("fill", "none")
             .style("stroke", d => d.light)
 
@@ -273,12 +273,12 @@ const lineChart = (dataSet) => {
         .attr("class", "mouse-per-line");
 
     const mouseTracker = () => {
-        mouseG.append('svg:rect')                                       // append a rect to catch mouse movements on SVG
+        mouseG.append('svg:rect') // append a rect to catch mouse movements on SVG
             .attr('width', width)
             .attr('height', height)
             .attr('fill', 'none')
             .attr('pointer-events', 'all')
-            .on('mouseout', () => {                                    // mouse out : hide line, circles and text
+            .on('mouseout', () => { // mouse out : hide line, circles and text
                 d3.select(".mouse-line")
                     .style("opacity", "0");
                 d3.selectAll(".mouse-per-line circle")
@@ -286,7 +286,7 @@ const lineChart = (dataSet) => {
                 d3.selectAll(".mouse-per-line text")
                     .style("opacity", "0");
             })
-            .on('mouseover', () => {                                // mouse in : show line, circles and text
+            .on('mouseover', () => { // mouse in : show line, circles and text
                 d3.select(".mouse-line")
                     .style("opacity", "1");
                 d3.selectAll(".mouse-per-line circle")
@@ -294,7 +294,7 @@ const lineChart = (dataSet) => {
                 d3.selectAll(".mouse-per-line text")
                     .style("opacity", "1");
             })
-            .on('mousemove', function () {                          // mouse moving over SVG
+            .on('mousemove', function () { // mouse moving over SVG
                 let mouse = d3.mouse(this);
                 d3.select(".mouse-line")
                     .attr("d", () => {
@@ -339,7 +339,7 @@ const lineChart = (dataSet) => {
                             .attr("cy", yScale(y));
                         bullet.attr("transform", `translate(${xScale(xDate) - 10},${yScale(y) - 15})`);
                         textbullet.text(y.toFixed(4))
-                            .style("color", "rebeccapurple");  // colot not working
+                            .style("color", "rebeccapurple"); // colot not working
                     });
             });
     }
@@ -432,33 +432,27 @@ const barChart = (dataSet) => {
 
         function hover() {
             d3.select(this)
-            .style("opacity", "0.8");
-            
+                .style("opacity", "0.8");
+
             g.append("g")
-            .attr("id", "textHover")
-            .selectAll("text")
-            .data(rectData)
-            .enter()
-            .append("text")
-            .attr("x", d => xScale(d.date) + xScale.bandwidth()/2 - 10)
-            .attr("y", d => yScale(d.value) - 10)
-            .text(d => d.value)
-            .style('font-weight', 'bold')
-            .style('font-size', '1.7rem')
-            .style("fill", color)
+                .attr("id", "textHover")
+                .selectAll("text")
+                .data(rectData)
+                .enter()
+                .append("text")
+                .attr("x", d => xScale(d.date) + xScale.bandwidth() / 2 - 10)
+                .attr("y", d => yScale(d.value) - 10)
+                .text(d => d.value)
+                .style('font-weight', 'bold')
+                .style('font-size', '1.7rem')
+                .style("fill", color)
         }
+
         function unHover() {
             d3.select(this)
-            .style("opacity", "1");
-
+                .style("opacity", "1");
             d3.select("#textHover").remove();
         }
-            
-           // g.selectAll("text")
-           // .data(rectData)
-           // .enter()
-           // .append("text")
-           // .text(d => console.log(d))
 
         let gRect = g.selectAll("rect")
             .data(rectData)
@@ -471,8 +465,6 @@ const barChart = (dataSet) => {
             .attr('fill', `${color}`)
             .on("mouseover", hover)
             .on("mouseleave", unHover)
-
-
 
         d3.select("#selectButton2").on("change", () => {
             g.remove();
@@ -494,18 +486,68 @@ document.getElementById('mw-content-text').insertBefore(table2, target);
 // data from tableTwo
 let dataTableTwo = getDataFromHTMLTable("#table2 tr")
 dataTableTwo = parseToLineData(dataTableTwo)
-// console.log(dataTableTwo);
 barChart(dataTableTwo)
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////                                                                                                  //////////////
+//////////////                                  ONLINE DATA CHART FUNCTION                                      //////////////
+//////////////                                                                                                  //////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+const RequestData = async () => {
+    try {
+        let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
+        let data = await dataRequest.json();
+        return data
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+const createRealTimeGraphData = async () => {
+    const data = [];
+    const getData = await RequestData()
+    data.push(...getData)
+    let keys = ["x", "y"]
+    let dataSet = [];
+    data.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+    console.log(dataSet);
+
+    // Defining the chart default param
+    const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
+    const width = parentMaxWidth[0].offsetWidth;
+    const height = width / 2;
+    const margin = {
+        left: 25,
+        bottom: 20,
+        right: 60,
+        top: 20,
+    }
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
 
 
+    let minX = d3.min(dataSet.map(d => d.x))
+    let maxX = d3.max(dataSet.map(d => d.x))
+    // Defining the chart scale
+    let xScale = d3.scaleLinear()
+        .domain([minX, maxX])
+        .range([0, chartWidth])
+    let yScale = d3.scaleLinear()
+        .domain([-30, 30])
+        .range([chartHeight, 0])
 
-// Inspiration for the bar intersection
-// https://bl.ocks.org/larsenmtl/e3b8b7c2ca4787f77d78f58d41c3da91
+    // initialiazing the scaling for the scale
+    let xAxisGenerator = d3.axisBottom(xScale)
+    let yAxisGenerator = d3.axisLeft(yScale)
 
-// make element follow a path
-// http://bl.ocks.org/methodofaction/3824661
+    // Inserting the SVG Canvas in the html
+    const svg = d3.select("#mw-content-text").insert(`svg`, "#bodyContent").attr("id", "SVGOnlineData").attr("width", `${width}`).attr("height", `${height}`);
+    const g = svg.append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-
+}
+createRealTimeGraphData();

@@ -560,14 +560,21 @@ const createRealTimeGraphData = async () => {
 
 
     let line = g
-        .datum(dataSet)
+        .data([dataSet])
         .append("path")
+        .attr("id", "onlineLine")
         .attr("d", d => lineGenerator(d))
+        .attr("fill", "none")
+        .attr("stroke", "black")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
     }
-    setInterval( () => {
-        d3.select("#SVGOnlineData").remove
-    }  ,1000)
+    // setInterval( () => {
+    //     // d3.select("#onlineLine").remove()
+    //     d3.select("#SVGOnlineData").remove()
+    //     reset()
+    // }  ,1000)
 }
+
+// The graph works but has bug that needs to be fixed
 createRealTimeGraphData();

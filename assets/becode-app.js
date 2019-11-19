@@ -388,7 +388,7 @@ const barChart = (dataSet) => {
     // Inserting a button for data filter
     d3.select("#mw-content-text")
         .insert("select", "#SVGTable2")
-        .attr("id", "selectButton")
+        .attr("id", "selectButton2")
         .style("margin-top", "15px")
         .style("margin-bottom", "15px")
         .selectAll('myOptions')
@@ -398,51 +398,64 @@ const barChart = (dataSet) => {
         .text(d => d.key) // text showed in the menu
         .attr("value", d => d.key) // corresponding value returned by the button
 
-    // filter the data to initialize the chart with the first option of the select button
-    let choosenCountry = d3.select("#selectButton").property("value")
-    let rectData = dataSet.filter(d => d.key == choosenCountry)
 
-    const creategrahp = () => {
+    const createGraph = () => {
+        // filter the data to initialize the chart with the first option of the select button
+        let choosenCountry = d3.select("#selectButton2").property("value");
+        let rectData = dataSet.filter(d => d.key == choosenCountry);
+        let color = rectData[0].light;
 
-    // Defining the scale and drawing area inside the svg
-    const g = svg.append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        // Defining the scale and drawing area inside the svg
+        const g = svg.append("g")
+            .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    const dateDomain = rectData[0].data.map(obj => obj.date)
-    console.log(dateDomain);
-    
-    //Taking the data that will be used
-    rectData = rectData[0].data
-    
-    const xScale = d3.scaleBand()
-        .domain(dateDomain)
-        .range([0, chartWidth])
-        // .round(true)
-        .padding(0.3);       
+        const dateDomain = rectData[0].data.map(obj => obj.date);
 
-    let maxY = d3.max(rectData.map(obj => obj.value))
-    maxY = Math.ceil(maxY/100)*100
-    const yScale = d3.scaleLinear()
-        .domain([0, maxY])
-        .range([chartHeight, 0]);
+        //Taking the data that will be used
+        rectData = rectData[0].data;
 
-    // Calling the  Axis
-    g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
-    g.append("g").call(d3.axisLeft(yScale));
+        const xScale = d3.scaleBand()
+            .domain(dateDomain)
+            .range([0, chartWidth])
+            // .round(true)
+            .padding(0.3);
 
-    g.selectAll("rect")
-    .data(rectData)
-    .enter()
-    .append("rect")
-    .attr("x", d => xScale(d.date))
-    .attr("y", d => yScale(d.value))
-    .attr("width", d => xScale.bandwidth())
-    .attr("height", d => chartHeight - yScale(d.value))
+        let maxY = d3.max(rectData.map(obj => obj.value))
+        maxY = Math.ceil(maxY / 100) * 100
+        const yScale = d3.scaleLinear()
+            .domain([0, maxY])
+            .range([chartHeight, 0]);
 
+        // Calling the  Axis
+        g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
+        g.append("g").call(d3.axisLeft(yScale));
+
+        let gRect = g.selectAll("rect")
+            .data(rectData)
+            .enter()
+            .append("rect")
+            .attr("x", d => xScale(d.date))
+            .attr("y", d => yScale(d.value))
+            .attr("width", d => xScale.bandwidth())
+            .attr("height", d => chartHeight - yScale(d.value))
+            .attr('fill', `${color}`)
+            .on("mouseover", () => {
+                g.selectAll("text")
+                .data(rectData)
+                .enter()
+                .append("text")
+                .text( d => d.value)
+            })
+            // .on("mouseleave", unhover())
+
+
+
+        d3.select("#selectButton2").on("change", () => {
+            g.remove();
+            createGraph();
+        })
     }
-
-
-    creategrahp()
+    createGraph()
 }
 
 // The table 2 is about prisonner ==> Moving tableTwo from the bad place to the right place
@@ -456,7 +469,6 @@ document.getElementById('mw-content-text').insertBefore(table2, target);
 
 // data from tableTwo
 let dataTableTwo = getDataFromHTMLTable("#table2 tr")
-// console.log(dataTableTwo);
 dataTableTwo = parseToLineData(dataTableTwo)
 // console.log(dataTableTwo);
 barChart(dataTableTwo)

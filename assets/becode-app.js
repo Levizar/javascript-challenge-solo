@@ -508,16 +508,23 @@ const RequestData = async () => {
 }
 
 const createRealTimeGraphData = async () => {
-    const data = [];
+    // Defining the const of the function
+    const keys = ["x", "y"]
+    const dataSet = [];
     
-    const reset = async () => {
-    const getData = await RequestData()
-    data.push(...getData)
-    let keys = ["x", "y"]
-    let dataSet = [];
-    data.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+    // Getting the data and pushing it into an array
+    const getAndPrepareLineData = async () => {
+        const getData = await RequestData()
+        const data = [...getData];
+        data.forEach(arrOfData => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arrOfData[index]]))))
+        while (dataSet.length > 100){
+            dataSet.shift();
+        }
+    }
+    // launch it for the initialization
+    getAndPrepareLineData();
 
-    // Defining the chart default param
+    // Defining the const chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
     const width = parentMaxWidth[0].offsetWidth;
     const height = width / 2;
@@ -529,17 +536,23 @@ const createRealTimeGraphData = async () => {
     }
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
-
-
-    let minX = d3.min(dataSet.map(d => d.x))
-    let maxX = d3.max(dataSet.map(d => d.x))
-    // Defining the chart scale
-    let xScale = d3.scaleLinear()
-        .domain([minX, maxX])
-        .range([0, chartWidth])
-    let yScale = d3.scaleLinear()
-        .domain([-30, 30])
-        .range([chartHeight, 0])
+    let minX;
+    let maxX;
+    let xScale;
+    let yScale;
+    // const recalculateTheScale = () => {
+        minX = d3.min(dataSet.map(d => d.x))
+        maxX = d3.max(dataSet.map(d => d.x))
+        // Defining the chart scale
+        xScale = d3.scaleLinear()
+            .domain([minX, maxX])
+            .range([0, chartWidth])
+        yScale = d3.scaleLinear()
+            .domain([-30, 30])
+            .range([chartHeight, 0])
+    // }
+    // launch it for the initialization
+    // recalculateTheScale();
 
     // initialiazing the scaling for the scale
     let xAxisGenerator = d3.axisBottom(xScale)
@@ -554,9 +567,11 @@ const createRealTimeGraphData = async () => {
     const g = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Calling the  Axis
-    g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
-    g.append("g").call(d3.axisLeft(yScale));
+    // Calling the Axis
+    let gXAxis = g.append("g");
+    gXAxis.call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
+    let gYAxis = g.append("g");
+    gYAxis.call(d3.axisLeft(yScale));
 
 
     let line = g
@@ -568,12 +583,12 @@ const createRealTimeGraphData = async () => {
         .attr("stroke", "black")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
-    }
-    // setInterval( () => {
-    //     // d3.select("#onlineLine").remove()
-    //     d3.select("#SVGOnlineData").remove()
-    //     reset()
-    // }  ,1000)
+
+    setInterval( () => {
+        getAndPrepareLineData();
+        // recalculateTheScale();
+
+    }  ,1000)
 }
 
 // The graph works but has bug that needs to be fixed

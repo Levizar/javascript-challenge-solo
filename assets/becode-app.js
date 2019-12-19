@@ -518,10 +518,10 @@ const getData = async (arrDataset) => {
         console.error(e);
     }
 }
+
 const createRealTimeGraphData = async () => {
     let dataSet = [];
     dataSet = await getData(dataSet);
-
     // Defining the chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
     const width = parentMaxWidth[0].offsetWidth;
@@ -575,6 +575,8 @@ const createRealTimeGraphData = async () => {
 
 
         line.data([dataSet])
+            .transition()
+            .duration(400)
             .attr("d", d => {
                 console.log("graph foireux : ", typeof (d));
                 console.log("graph foireux : ", d);
@@ -587,6 +589,9 @@ const createRealTimeGraphData = async () => {
     reset();
     setInterval(async () => {
         dataSet = await getData(dataSet);
+        while(dataSet.length >100){
+            dataSet.shift();
+        }
         reset()
     }, 1000)
 }

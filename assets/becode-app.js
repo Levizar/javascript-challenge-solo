@@ -217,8 +217,6 @@ const lineChart = (dataSet) => {
             .transition()
             .duration(1000)
             .attr("d", d => {
-                console.log("graph ok :", typeof (d.data));
-                console.log("graph ok :", d.data);
                 return lineGenerator(d.data)
             }) // lineGenerator: d3.line().attr(X).attr(Y)
             .style("fill", "none")
@@ -510,7 +508,6 @@ const getData = async (arrDataset) => {
         arrData.push(...data)
         let keys = ["x", "y"]
         arrData.forEach(arr => arrDataset.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
-        console.log("arrDataset", arrDataset);
         arrDataset.forEach((obj,i) => obj.x = i);
         
         return arrDataset
@@ -578,8 +575,6 @@ const createRealTimeGraphData = async () => {
             .transition()
             .duration(400)
             .attr("d", d => {
-                console.log("graph foireux : ", typeof (d));
-                console.log("graph foireux : ", d);
                 return lineGenerator(d)
             })
             .attr("fill", "none")

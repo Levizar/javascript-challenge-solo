@@ -497,25 +497,25 @@ barChart(dataTableTwo)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const RequestData = async () => {
-    try {
-        let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
-        let data = await dataRequest.json();
-        return data
-    } catch (e) {
-        console.error(e);
-    }
-}
 
 const createRealTimeGraphData = async () => {
-    const data = [];
-    
-    const reset = async () => {
-    const getData = await RequestData()
-    data.push(...getData)
-    let keys = ["x", "y"]
     let dataSet = [];
-    data.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+
+    const getData = async () => {
+        try {
+            let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
+            const arrData = [];
+            let data = await dataRequest.json();
+            arrData.push(...data)
+            let keys = ["x", "y"]
+            arrData.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    getData();
+
 
     // Defining the chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
@@ -530,50 +530,57 @@ const createRealTimeGraphData = async () => {
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
-
-    let minX = d3.min(dataSet.map(d => d.x))
-    let maxX = d3.max(dataSet.map(d => d.x))
-    // Defining the chart scale
-    let xScale = d3.scaleLinear()
-        .domain([minX, maxX])
-        .range([0, chartWidth])
-    let yScale = d3.scaleLinear()
-        .domain([-30, 30])
-        .range([chartHeight, 0])
-
-    // initialiazing the scaling for the scale
-    let xAxisGenerator = d3.axisBottom(xScale)
-    let yAxisGenerator = d3.axisLeft(yScale)
-
-    let lineGenerator = d3.line()
-        .x(d => xScale(d.x))
-        .y(d => yScale(d.y));
-
     // Inserting the SVG Canvas in the html
     const svg = d3.select("#content").insert(`svg`, "#bodyContent").attr("id", "SVGOnlineData").attr("width", `${width}`).attr("height", `${height}`);
     const g = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-    // Calling the  Axis
-    g.append("g").call(d3.axisBottom(xScale)).attr("transform", `translate(0, ${chartHeight})`);
-    g.append("g").call(d3.axisLeft(yScale));
-
+    // Append axis
+    const xAxe = g.append("g");
+    const yAxe = g.append("g");
 
     let line = g
-        .data([dataSet])
         .append("path")
         .attr("id", "onlineLine")
-        .attr("d", d => lineGenerator(d))
         .attr("fill", "none")
         .attr("stroke", "black")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
+
+    const reset = () => {
+
+        const minX = 0; //d3.min(dataSet.map(d => d.x))
+        const maxX = 10; //d3.max(dataSet.map(d => d.x))
+        // Defining the chart scale
+        const xScale = d3.scaleLinear()
+            .domain([minX, maxX])
+            .range([0, chartWidth])
+        const yScale = d3.scaleLinear()
+            .domain([-30, 30])
+            .range([chartHeight, 0])
+
+        // initialiazing the scaling for the scale
+        const xAxisGenerator = d3.axisBottom(xScale)
+        const yAxisGenerator = d3.axisLeft(yScale)
+
+        const lineGenerator = d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y));
+
+        // (re-)Calling the  Axis
+        xAxe.call(xAxisGenerator).attr("transform", `translate(0, ${chartHeight})`);
+        yAxe.call(yAxisGenerator);
+
+
+        line.data([dataSet])
+            .attr("d", d => lineGenerator(d));
     }
-    // setInterval( () => {
+
+    reset();
+    // setInterval(() => {
     //     // d3.select("#onlineLine").remove()
     //     d3.select("#SVGOnlineData").remove()
     //     reset()
-    // }  ,1000)
+    // }, 1000)
 }
 
 // The graph works but has bug that needs to be fixed

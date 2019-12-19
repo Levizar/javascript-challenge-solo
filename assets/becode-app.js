@@ -216,7 +216,11 @@ const lineChart = (dataSet) => {
             .data(lineData)
             .transition()
             .duration(1000)
-            .attr("d", d => lineGenerator(d.data)) // lineGenerator: d3.line().attr(X).attr(Y)
+            .attr("d", d => {
+                console.log("graph ok :", typeof (d.data));
+                console.log("graph ok :", d.data);
+                return lineGenerator(d.data)
+            }) // lineGenerator: d3.line().attr(X).attr(Y)
             .style("fill", "none")
             .style("stroke", d => d.light)
 
@@ -498,24 +502,22 @@ barChart(dataTableTwo)
 
 
 
+const getData = async (arrDataset) => {
+    try {
+        let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
+        const arrData = [];
+        let data = await dataRequest.json();
+        arrData.push(...data)
+        let keys = ["x", "y"]
+        arrData.forEach(arr => arrDataset.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+        return arrDataset
+    } catch (e) {
+        console.error(e);
+    }
+}
 const createRealTimeGraphData = async () => {
     let dataSet = [];
-
-    const getData = async () => {
-        try {
-            let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
-            const arrData = [];
-            let data = await dataRequest.json();
-            arrData.push(...data)
-            let keys = ["x", "y"]
-            arrData.forEach(arr => dataSet.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    getData();
-
+    dataSet = await getData(dataSet);
 
     // Defining the chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
@@ -534,6 +536,7 @@ const createRealTimeGraphData = async () => {
     const svg = d3.select("#content").insert(`svg`, "#bodyContent").attr("id", "SVGOnlineData").attr("width", `${width}`).attr("height", `${height}`);
     const g = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
     // Append axis
     const xAxe = g.append("g");
     const yAxe = g.append("g");
@@ -541,15 +544,12 @@ const createRealTimeGraphData = async () => {
     let line = g
         .append("path")
         .attr("id", "onlineLine")
-        .attr("fill", "none")
-        .attr("stroke", "black")
         .style("stroke-linejoin", "round")
         .style("stroke-width", 3);
 
     const reset = () => {
-
-        const minX = 0; //d3.min(dataSet.map(d => d.x))
-        const maxX = 10; //d3.max(dataSet.map(d => d.x))
+        const minX = d3.min(dataSet.map(d => d.x))
+        const maxX = d3.max(dataSet.map(d => d.x))
         // Defining the chart scale
         const xScale = d3.scaleLinear()
             .domain([minX, maxX])
@@ -572,13 +572,18 @@ const createRealTimeGraphData = async () => {
 
 
         line.data([dataSet])
-            .attr("d", d => lineGenerator(d));
+            .attr("d", d => {
+                console.log("graph foireux : ", typeof (d));
+                console.log("graph foireux : ", d);
+                return lineGenerator(d)
+            })
+            .attr("fill", "none")
+            .attr("stroke", "black");
     }
 
     reset();
-    // setInterval(() => {
-    //     // d3.select("#onlineLine").remove()
-    //     d3.select("#SVGOnlineData").remove()
+    // setInterval(async () => {
+    //     dataSet = await getData(dataSet);
     //     reset()
     // }, 1000)
 }

@@ -510,6 +510,9 @@ const getData = async (arrDataset) => {
         arrData.push(...data)
         let keys = ["x", "y"]
         arrData.forEach(arr => arrDataset.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
+        console.log("arrDataset", arrDataset);
+        arrDataset.forEach((obj,i) => obj.x = i);
+        
         return arrDataset
     } catch (e) {
         console.error(e);
@@ -582,10 +585,10 @@ const createRealTimeGraphData = async () => {
     }
 
     reset();
-    // setInterval(async () => {
-    //     dataSet = await getData(dataSet);
-    //     reset()
-    // }, 1000)
+    setInterval(async () => {
+        dataSet = await getData(dataSet);
+        reset()
+    }, 1000)
 }
 
 // The graph works but has bug that needs to be fixed

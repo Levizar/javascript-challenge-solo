@@ -500,17 +500,19 @@ barChart(dataTableTwo)
 
 
 
-const getData = async (arrDataset) => {
+const getData = async (arrDataset, count) => {
     try {
         let dataRequest = await fetch("https://inside.becode.org/api/v1/data/random.json");
         const arrData = [];
         let data = await dataRequest.json();
         arrData.push(...data)
         let keys = ["x", "y"]
-        arrData.forEach(arr => arrDataset.push(Object.fromEntries(keys.map((a, index) => [keys[index], arr[index]]))))
-        arrDataset.forEach((obj,i) => obj.x = i);
-        
-        return arrDataset
+        arrData.forEach(arr => arrDataset.push(Object.fromEntries(keys.map((a, index) => {
+            dataXY = [keys[index], keys[index] == "x" ? count : arr[index]];
+            count++;
+            return dataXY
+        }))))
+        return [arrDataset, count]
     } catch (e) {
         console.error(e);
     }
@@ -518,7 +520,8 @@ const getData = async (arrDataset) => {
 
 const createRealTimeGraphData = async () => {
     let dataSet = [];
-    dataSet = await getData(dataSet);
+    let count = 0;
+    [dataSet, count] = await getData(dataSet, count);
     // Defining the chart default param
     const parentMaxWidth = d3.select("#mw-content-text").nodes(); // making the chart ready for responsiv
     const width = parentMaxWidth[0].offsetWidth;
@@ -580,11 +583,11 @@ const createRealTimeGraphData = async () => {
             .attr("fill", "none")
             .attr("stroke", "black");
     }
-
     reset();
+
     setInterval(async () => {
-        dataSet = await getData(dataSet);
-        while(dataSet.length >100){
+        [dataSet, count] = await getData(dataSet, count);
+        while (dataSet.length > 100) {
             dataSet.shift();
         }
         reset()

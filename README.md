@@ -48,3 +48,19 @@ I encountered several difficulties in thi project:
 - The first charts with fetch data was finished in time but was awful.
   I ran out of time thus I came up with the solution of removing and regenerating the charts.
   I thought it was kind of ugly thus I refactored this part 1 month later and I came out with something way nicer.
+
+## Preview:
+
+### First chart : fetch data
+
+![First chart : fetch data](assets\img\Graph1.PNG)
+
+### Second chart : Line chart with:
+- filter by country 
+- line data tracker
+
+![Second chart : Line chart by country with a line data tracker](assets\img\Graph2.png)
+
+### Third chart : Simple bar chart with a data display on hoover
+
+![Third chart : Simple bar chart with a data display on hoover](assets\img\Graph3.png)

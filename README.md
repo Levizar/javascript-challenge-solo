@@ -31,7 +31,7 @@ Especially:
 
 ## Comments:
 
-I encountered several difficulties in thi project:
+I encountered several difficulties in this project:
 
 - We had one week to learn the library and make something nice out of it for this project.
   We didn't praticed D3.JS before and thus it was kind of a very intense work to achieve the goals.
@@ -53,14 +53,14 @@ I encountered several difficulties in thi project:
 
 ### First chart : fetch data
 
-![First chart : fetch data](assets\img\Graph1.PNG)
+![First chart : fetch data](assets/img/Graph1.PNG)
 
 ### Second chart : Line chart with:
 - filter by country 
 - line data tracker
 
-![Second chart : Line chart by country with a line data tracker](assets\img\Graph2.png)
+![Second chart : Line chart by country with a line data tracker](assets/img/Graph2.png)
 
 ### Third chart : Simple bar chart with a data display on hoover
 
-![Third chart : Simple bar chart with a data display on hoover](assets\img\Graph3.png)
+![Third chart : Simple bar chart with a data display on hoover](assets/img/Graph3.png)
